@@ -1,4 +1,5 @@
 from django.shortcuts import render, reverse
+from .forms import AdminForm, ConsumerForm, KurirForm, CSForm
 
 # Create your views here.
 def main_menu_register(request):
@@ -12,24 +13,32 @@ def main_menu_register(request):
     return render(request, 'register.html', context)
 
 def register_admin(request):
-    context = {}
+    context = {
+        'form' : AdminForm(request.POST or None)
+    }
 
     return render(request, 'register_admin.html', context)
 
 
 def register_consumer(request):
-    context = {}
+    context = {
+        'form' : ConsumerForm(request.POST or None)
+    }
 
     return render(request, 'register_consumer.html', context)
 
 
 def register_kurir(request):
-    context = {}
+    context = {
+        'form' : KurirForm(request.POST or None)
+    }
 
     return render(request, 'register_kurir.html', context)
 
 
 def register_cs(request):
-    context = {}
+    context = {
+        'form' : CSForm(request.POST or None)
+    }
 
     return render(request, 'register_cs.html', context)

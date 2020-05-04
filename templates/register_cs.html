@@ -4,7 +4,11 @@
 <div class="container" style="margin-top: 50px;">
     <h2>REGISTRASI CS</h2>
 
-
+    <from method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary" name='register' type='submit'>Register</button>
+    </form>
 </div>
 
 {% endblock content %}
