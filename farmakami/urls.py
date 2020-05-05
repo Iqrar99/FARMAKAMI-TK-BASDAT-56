@@ -22,5 +22,5 @@ urlpatterns = [
     path('login/', include('authentication.urls')),
     path('register/', include('registration.urls')),
     path('navigate/', include('navigation.urls')),
-    path("data/", include('db.urls')),
+    path("balai-pengobatan/", include('balai_pengobatan.urls')),
 ]

@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'authentication',
     'registration',
     'navigation',
-    'db',
+    'balai_pengobatan',
 ]
 
 MIDDLEWARE = [
