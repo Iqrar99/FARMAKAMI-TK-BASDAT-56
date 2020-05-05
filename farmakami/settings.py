@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'home',
     'authentication',
     'registration',
+    'navigation',
+    'db',
 ]
 
 MIDDLEWARE = [

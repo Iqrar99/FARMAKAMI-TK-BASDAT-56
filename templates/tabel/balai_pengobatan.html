@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container" style="margin-top: 50px;">
+    <h2>Daftar Balai Pengobatan</h2>
+
+    <style type="text/css">
+        .tg {
+            border-collapse: collapse;
+            border-color: #9ABAD9;
+            border-spacing: 0;
+        }
+    
+        .tg td {
+            background-color: #EBF5FF;
+            border-color: #9ABAD9;
+            border-style: solid;
+            border-width: 1px;
+            color: #444;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+    
+        .tg th {
+            background-color: #409cff;
+            border-color: #9ABAD9;
+            border-style: solid;
+            border-width: 1px;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+    
+        .tg .tg-baqh {
+            text-align: center;
+            vertical-align: top
+        }
+    
+        .tg .tg-c3ow {
+            border-color: inherit;
+            text-align: center;
+            vertical-align: top
+        }
+    
+        .tg .tg-0lax {
+            text-align: left;
+            vertical-align: top
+        }
+    </style>
+    <table class="tg" style="table-layout: fixed; width: 960px">
+        <colgroup>
+            <col style="width: 76px">
+            <col style="width: 209px">
+            <col style="width: 278px">
+            <col style="width: 133px">
+            <col style="width: 174px">
+            <col style="width: 90px">
+        </colgroup>
+        <tr>
+            <th class="tg-c3ow">id_balai</th>
+            <th class="tg-baqh">alamat_balai</th>
+            <th class="tg-baqh">nama_balai</th>
+            <th class="tg-baqh">jenis_balai</th>
+            <th class="tg-baqh">telepon_balai</th>
+            <th class="tg-baqh">Action</th>
+        </tr>
+        <tr>
+            <td class="tg-0lax">BA01</td>
+            <td class="tg-0lax">Jl. Brigjen S. Sudiarto 375</td>
+            <td class="tg-0lax">Balai Besar Wilayah Sungai Pemali - Juana</td>
+            <td class="tg-0lax">kesehatan</td>
+            <td class="tg-0lax">(024) 6722240</td>
+            <td class="tg-0lax"></td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">BA02</td>
+            <td class="tg-0lax">Jl.Kapten Tjok Agung Tresna No.9</td>
+            <td class="tg-0lax">Balai Wilayah Sungai Bali - Penida</td>
+            <td class="tg-0lax">bahasa</td>
+            <td class="tg-0lax">(0361) 234953</td>
+            <td class="tg-0lax"></td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">BA03</td>
+            <td class="tg-0lax">Jl. Mr. A.A.A. Maramis</td>
+            <td class="tg-0lax">Balai Wilayah Sungai Sulawesi I</td>
+            <td class="tg-0lax">lelang</td>
+            <td class="tg-0lax"></td>
+            <td class="tg-0lax"></td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">BA04</td>
+            <td class="tg-0lax">Jl. Jati Besar No.443</td>
+            <td class="tg-0lax">Balai Wilayah Sungai Maluku Utara</td>
+            <td class="tg-0lax">obligasi</td>
+            <td class="tg-0lax">(0921) 3128775</td>
+            <td class="tg-0lax"></td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">BA05</td>
+            <td class="tg-0lax">Jl. Sapta Taruna Raya</td>
+            <td class="tg-0lax">Balai Bendungan</td>
+            <td class="tg-0lax">rakyat</td>
+            <td class="tg-0lax">021-759-08364</td>
+            <td class="tg-0lax"></td>
+        </tr>
+    </table>
+</div>
+
+{% endblock content %}

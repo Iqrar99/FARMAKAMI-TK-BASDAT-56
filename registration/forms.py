@@ -46,7 +46,7 @@ class ConsumerForm(forms.Form):
         widget=forms.SelectDateWidget(years=range(1900,2100)),
         required=True
     )
-    consumer_address = forms.CharField(label='Alamat', max_length=500, required=True)
+    consumer_address = forms.CharField(label='Alamat', max_length=500)
 
 class KurirForm(forms.Form):
     kurir_email = forms.EmailField(label='Email', required=True)
