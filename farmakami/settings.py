@@ -43,12 +43,9 @@ INSTALLED_APPS = [
     'registration',
     'navigation',
     'balai_pengobatan',
-<<<<<<< HEAD
     'apotek',
     'produk_apotek',
-=======
     'obat',
->>>>>>> iqrar
 ]
 
 MIDDLEWARE = [
