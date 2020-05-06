@@ -26,4 +26,5 @@ urlpatterns = [
     path('apotek/', include('apotek.urls')),
     path('produk-apotek/', include('produk_apotek.urls')),
     path("obat/", include('obat.urls')),
+    path('transaksi-pembelian/', include('transaksi_pembelian.urls')),
 ]
