@@ -24,5 +24,6 @@ urlpatterns = [
     path('navigate/', include('navigation.urls')),
     path("balai-pengobatan/", include('balai_pengobatan.urls')),
     path('apotek/', include('apotek.urls')),
-    path('produk-apotek/', include('produk_apotek.urls'))
+    path('produk-apotek/', include('produk_apotek.urls')),
+    path("obat/", include('obat.urls')),
 ]
