@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import ObatForm
+from .forms import CreateObatForm, UpdateObatForm
 
 # Create your views here.
 def tabel_obat(request):
@@ -9,7 +9,14 @@ def tabel_obat(request):
 
 def buat_obat(request):
     context = {
-        'form' : ObatForm(request.POST or None)
+        'form' : CreateObatForm(request.POST or None)
     }
 
     return render(request, 'create/create_obat.html', context)
+
+def update_obat(request):
+    context = {
+        'form' : UpdateObatForm(request.POST or None)
+    }
+
+    return render(request, 'update/update_obat.html', context)
