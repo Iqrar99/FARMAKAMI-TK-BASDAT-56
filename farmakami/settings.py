@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'registration',
     'navigation',
     'balai_pengobatan',
+    'list_product_beli',
 ]
 
 MIDDLEWARE = [
