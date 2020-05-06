@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import ListProdukForm 
+from .forms import ListProdukForm, UpdateList
 
 # Create your views here.
 def tabel_list_produk_dibeli(request):
@@ -11,3 +11,9 @@ def create_list_produk_dibeli(request):
         'form' : ListProdukForm(request.POST or None)
     }
 	return render(request, 'create/create_list_produk_dibeli.html', context)
+
+def update_list_produk_dibeli(request):
+	context = {
+        'form' : UpdateList(request.POST or None)
+    }
+	return render(request, 'update/update_list_product_dibeli.html', context)
