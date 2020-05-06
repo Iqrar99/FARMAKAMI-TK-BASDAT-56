@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'apotek',
     'produk_apotek',
     'obat',
+    'list_product_beli',
 ]
 
 MIDDLEWARE = [
