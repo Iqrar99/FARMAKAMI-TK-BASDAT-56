@@ -6,6 +6,4 @@ def konsumen_nav(request):
 
     }
 
-    
-
     return render(request, 'navigation/konsumen.html', context)
