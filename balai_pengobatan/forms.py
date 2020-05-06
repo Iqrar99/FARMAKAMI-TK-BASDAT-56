@@ -9,6 +9,7 @@ class BalaiPengobatanForm(forms.Form):
     nama_balai = forms.CharField(
         label='Nama Balai',
         max_length=50,
+        required=True
     )
     jenis_balai = forms.CharField(
         label='Jenis Balai',
@@ -18,5 +19,4 @@ class BalaiPengobatanForm(forms.Form):
     telepon_balai = forms.CharField(
         label='Telepon Balai',
         max_length=20,
-        required=True
     )
