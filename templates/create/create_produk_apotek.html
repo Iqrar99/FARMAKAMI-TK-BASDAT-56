@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container" style="margin-top: 50px">
+    <h2>Buat Produk Apotek</h2>
+
+    <div class="dropdown" style='margin-bottom: 15px'>
+        <table>
+            <tr>
+                <td>ID Produk: </td>
+                <td>
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">PR001</a></li>
+                            <li><a href="#">PR002</a></li>
+                            <li><a href="#">PR003</a></li>
+                        </ul>
+                </td>
+            </tr>
+
+            <tr>
+                <td>ID Apotek: </td>
+                <td>
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">AP01</a></li>
+                            <li><a href="#">AP02</a></li>
+                            <li><a href="#">AP03</a></li>
+                        </ul>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+        
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <br><br>
+
+    <button class="btn btn-primary" name='submit' type='submit'>Submit</button>
+</div>
+
+{% endblock content %}
