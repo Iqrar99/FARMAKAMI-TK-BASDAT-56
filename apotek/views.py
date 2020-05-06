@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import ApotekForm 
+from .forms import CreateApotekForm, UpdateApotekForm
 
 # Create your views here.
 def tabel_apotek(request):
@@ -8,7 +8,13 @@ def tabel_apotek(request):
 
 def buat_apotek(request):
 	context = {
-        'form' : ApotekForm(request.POST or None)
+        'form' : CreateApotekForm(request.POST or None)
     }
 	return render(request, 'create/create_apotek.html', context)
+
+def update_apotek(request):
+	context = {
+        'form' : UpdateApotekForm(request.POST or None)
+    }
+	return render(request, 'update/update_apotek.html', context)
 
