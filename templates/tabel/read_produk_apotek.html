@@ -1,0 +1,377 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="form-group col-md-8 mx-auto" style="margin-top: 50px;">
+    <h2>Data Produk Apotek</h2>
+
+    <style type="text/css">
+        .tg {
+            border-collapse: collapse;
+            border-color: #9ABAD9;
+            border-spacing: 0;
+        }
+    
+        .tg td {
+            background-color: #EBF5FF;
+            border-color: #9ABAD9;
+            border-style: solid;
+            border-width: 1px;
+            color: #444;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+    
+        .tg th {
+            background-color: #409cff;
+            border-color: #9ABAD9;
+            border-style: solid;
+            border-width: 1px;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+    
+        .tg .tg-baqh {
+            text-align: center;
+            vertical-align: top
+        }
+    
+        .tg .tg-c3ow {
+            border-color: inherit;
+            text-align: center;
+            vertical-align: top
+        }
+    
+        .tg .tg-0lax {
+            text-align: left;
+            vertical-align: top
+        }
+    </style>
+    <table class="tg" style="table-layout: fixed; width: 960px">
+        <colgroup>
+            <col style="width: 40px">
+            <col style="width: 40px">
+            <col style="width: 40px">
+            <col style="width: 40px">
+            <col style="width: 40px">
+            <col style="width: 40px">
+        </colgroup>
+        <tr>
+            <th class="tg-c3ow">ID Produk</th>
+            <th class="tg-baqh">ID Apotek</th>
+            <th class="tg-baqh">Harga Jual</th>
+            <th class="tg-baqh">Satuan Penjualan</th>
+            <th class="tg-baqh">Stok</th>
+            <th class="tg-baqh">Action</th>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR001</td>
+            <td class="tg-0lax">AP01</td>
+            <td class="tg-0lax">5000</td>
+            <td class="tg-0lax">paket</td>
+            <td class="tg-0lax">5</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR002</td>
+            <td class="tg-0lax">AP01</td>
+            <td class="tg-0lax">1000</td>
+            <td class="tg-0lax">paket</td>
+            <td class="tg-0lax">5</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR003</td>
+            <td class="tg-0lax">AP04</td>
+            <td class="tg-0lax">10000</td>
+            <td class="tg-0lax">paket</td>
+            <td class="tg-0lax">3</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR004</td>
+            <td class="tg-0lax">AP03</td>
+            <td class="tg-0lax">4000</td>
+            <td class="tg-0lax">paket</td>
+            <td class="tg-0lax">2</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR005</td>
+            <td class="tg-0lax">AP02</td>
+            <td class="tg-0lax">3000</td>
+            <td class="tg-0lax">paket</td>
+            <td class="tg-0lax">4</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+                <tr>
+            <td class="tg-0lax">PR006</td>
+            <td class="tg-0lax">AP05</td>
+            <td class="tg-0lax">2000</td>
+            <td class="tg-0lax">paket</td>
+            <td class="tg-0lax">15</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR007</td>
+            <td class="tg-0lax">AP02</td>
+            <td class="tg-0lax">10000</td>
+            <td class="tg-0lax">paket</td>
+            <td class="tg-0lax">6</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR008</td>
+            <td class="tg-0lax">AP05</td>
+            <td class="tg-0lax">50000</td>
+            <td class="tg-0lax">paket</td>
+            <td class="tg-0lax">7</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR009</td>
+            <td class="tg-0lax">AP04</td>
+            <td class="tg-0lax">4000</td>
+            <td class="tg-0lax">paket</td>
+            <td class="tg-0lax">4</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR010</td>
+            <td class="tg-0lax">AP03</td>
+            <td class="tg-0lax">3000</td>
+            <td class="tg-0lax">kotak</td>
+            <td class="tg-0lax">10</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR011</td>
+            <td class="tg-0lax">AP01</td>
+            <td class="tg-0lax">15000</td>
+            <td class="tg-0lax">kotak</td>
+            <td class="tg-0lax">2</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR012</td>
+            <td class="tg-0lax">AP01</td>
+            <td class="tg-0lax">20000</td>
+            <td class="tg-0lax">kotak</td>
+            <td class="tg-0lax">3</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR013</td>
+            <td class="tg-0lax">AP04</td>
+            <td class="tg-0lax">50000</td>
+            <td class="tg-0lax">kotak</td>
+            <td class="tg-0lax">8</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR014</td>
+            <td class="tg-0lax">AP03</td>
+            <td class="tg-0lax">30000</td>
+            <td class="tg-0lax">kotak</td>
+            <td class="tg-0lax">9</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR015</td>
+            <td class="tg-0lax">AP02</td>
+            <td class="tg-0lax">25000</td>
+            <td class="tg-0lax">kotak</td>
+            <td class="tg-0lax">10</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR016</td>
+            <td class="tg-0lax">AP05</td>
+            <td class="tg-0lax">1000</td>
+            <td class="tg-0lax">paket</td>
+            <td class="tg-0lax">10</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR017</td>
+            <td class="tg-0lax">AP02</td>
+            <td class="tg-0lax">6000</td>
+            <td class="tg-0lax">kotak</td>
+            <td class="tg-0lax">60</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR018</td>
+            <td class="tg-0lax">AP05</td>
+            <td class="tg-0lax">70000</td>
+            <td class="tg-0lax">paket</td>
+            <td class="tg-0lax">10</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR019</td>
+            <td class="tg-0lax">AP04</td>
+            <td class="tg-0lax">2000</td>
+            <td class="tg-0lax">kotak</td>
+            <td class="tg-0lax">5</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="tg-0lax">PR020</td>
+            <td class="tg-0lax">AP02</td>
+            <td class="tg-0lax">15000</td>
+            <td class="tg-0lax">kotak</td>
+            <td class="tg-0lax">10</td>
+            <td class="tg-0lax">
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+{% endblock content %}

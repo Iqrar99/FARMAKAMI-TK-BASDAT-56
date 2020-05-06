@@ -23,4 +23,6 @@ urlpatterns = [
     path('register/', include('registration.urls')),
     path('navigate/', include('navigation.urls')),
     path("balai-pengobatan/", include('balai_pengobatan.urls')),
+    path('apotek/', include('apotek.urls')),
+    path('produk-apotek/', include('produk_apotek.urls'))
 ]
