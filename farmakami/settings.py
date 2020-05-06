@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'obat',
     'list_product_beli',
     'transaksi_pembelian',
+    'user_profile',
 ]
 
 MIDDLEWARE = [
