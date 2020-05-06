@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'produk_apotek',
     'obat',
     'list_product_beli',
+    'transaksi_pembelian',
 ]
 
 MIDDLEWARE = [
