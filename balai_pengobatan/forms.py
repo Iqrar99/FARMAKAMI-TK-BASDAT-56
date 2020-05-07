@@ -20,6 +20,16 @@ class CreateBalaiPengobatanForm(forms.Form):
         label='Telepon Balai',
         max_length=20,
     )
+    id_apotek = forms.ChoiceField(
+        label='Daftar ID Apotek berasosiasi' ,
+        choices=(
+            (1, 'AP01'),
+            (2, 'AP02'),
+            (3, 'AP03'),
+            (4, 'AP04'),
+            (5, 'AP05'),
+        )
+    )
 
 
 class UpdateBalaiPengobatanForm(forms.Form):
