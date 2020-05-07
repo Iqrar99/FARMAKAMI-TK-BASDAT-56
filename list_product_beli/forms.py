@@ -40,12 +40,10 @@ class UpdateList(forms.Form):
     )
     id_transaksi_pembelian = forms.CharField(
         label='ID Transaksi Pembelian',
-        disabled=True,
         widget=forms.Select(choices=ID_T0)
     )   
     jumlah = forms.CharField(
         label='jumlah',
         max_length=50,
         required=True,
-        disabled=True,
     )
