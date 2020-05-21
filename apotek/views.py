@@ -4,6 +4,7 @@ from .forms import CreateApotekForm, UpdateApotekForm
 # Create your views here.
 def tabel_apotek(request):
 	context = {}
+	
 	return render(request, 'tabel/read_apotek.html', context)
 
 def buat_apotek(request):
@@ -17,4 +18,3 @@ def update_apotek(request):
         'form' : UpdateApotekForm(request.POST or None)
     }
 	return render(request, 'update/update_apotek.html', context)
-

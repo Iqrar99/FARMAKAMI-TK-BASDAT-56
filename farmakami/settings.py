@@ -86,24 +86,24 @@ WSGI_APPLICATION = 'farmakami.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'OPTIONS': {'options': '-c search_path=django,farmakami'},
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'farmakami',
-#         'USER': 'postgres',
-#         'PASSWORD': 'admin',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'OPTIONS': {'options': '-c search_path=django,farmakami'},
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd9ckl8vsk6fl6j',
+        'USER': 'cxqmydifabxqlb',
+        'PASSWORD': 'c94d9c933d8e32522ab1f91f13be1e5464f4c2cb1a91dd1cb1f419ef7d60f3d7',
+        'HOST': 'ec2-52-6-143-153.compute-1.amazonaws.com',
+        'PORT': '5432',
+    }
+}
 
 if PRODUCTION:
     DATABASES['default'] = dj_database_url.config()
