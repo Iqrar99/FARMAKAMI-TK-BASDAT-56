@@ -108,16 +108,6 @@ def get_name(email:str) -> str:
 
     return result[0]['nama']
 
-
-# ----------- LOGOUT -----------
-def user_logout(request):
-    """
-    function untuk user logout.
-    """
-
-    request.session.flush()
-    return redirect('/login/')
-
 def fetch(cursor):
 	columns = [col[0] for col in cursor.description]
 	return [dict(zip(columns, row)) for row in cursor.fetchall()]

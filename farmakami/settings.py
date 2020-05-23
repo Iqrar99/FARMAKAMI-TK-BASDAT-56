@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'list_product_beli',
     'transaksi_pembelian',
     'user_profile',
+    'logout',
 ]
 
 MIDDLEWARE = [
@@ -86,12 +87,6 @@ WSGI_APPLICATION = 'farmakami.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 
 DATABASES = {
     'default': {

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container" style="margin-top: 50px; text-align:center;">
+    <h2>Apakah anda yakin untuk logout Dari FarmaKami?</h2>
+    <br>
+    <div class="col">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-danger" name='logout' type='submit'>Ya, Logout</button>
+        </form>
+        <br>
+        <form action="backHome" method="GET">
+            <button class="btn btn-primary" name='cancel' type='submit'>Kembali</button>
+        </form>
+    </div>
+
+</div>
+
+{% endblock content %}
