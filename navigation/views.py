@@ -5,7 +5,10 @@ def admin_apotek_nav(request):
 	context = {}
 
 	if 'nama' in request.session:
-		context['nama'] = request.session['nama']
+		if request.session['role'] == 'admin-apotek':
+			context['nama'] = request.session['nama']
+		else:
+			return redirect(f"/navigate/{request.session['role']}")
 	else:
 		return redirect('/')
 
@@ -15,7 +18,10 @@ def cs_nav(request):
 	context = {}
 
 	if 'nama' in request.session:
-		context['nama'] = request.session['nama']
+		if request.session['role'] == 'cs':
+			context['nama'] = request.session['nama']
+		else:
+			return redirect(f"/navigate/{request.session['role']}")
 	else:
 		return redirect('/')
 
@@ -25,7 +31,10 @@ def konsumen_nav(request):
 	context = {}
 
 	if 'nama' in request.session:
-		context['nama'] = request.session['nama']
+		if request.session['role'] == 'konsumen':
+			context['nama'] = request.session['nama']
+		else:
+			return redirect(f"/navigate/{request.session['role']}")
 	else:
 		return redirect('/')
 
@@ -35,7 +44,10 @@ def kurir_nav(request):
 	context = {}
 
 	if 'nama' in request.session:
-		context['nama'] = request.session['nama']
+		if request.session['role'] == 'kurir':
+			context['nama'] = request.session['nama']
+		else:
+			return redirect(f"/navigate/{request.session['role']}")
 	else:
 		return redirect('/')
 	
