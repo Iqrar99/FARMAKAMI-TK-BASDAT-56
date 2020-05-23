@@ -7,6 +7,9 @@ def user_login(request):
     """
     function yang bertanggung jawab dalam user login.
     """
+    
+    if 'email' in request.session:
+        return redirect(f"/navigate/{request.session['role']}")
 
     response = {}
 
