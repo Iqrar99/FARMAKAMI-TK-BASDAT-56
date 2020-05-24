@@ -5,30 +5,58 @@
     <h2>Menu Navigasi Kurir</h2>
     <br>
     <h4 style="color: royalblue;">Selamat Datang, {{ nama }}!</h4>
-    <ul>
-        <li>Profil</li>
-        <li>Balai Pengobatan dan Apotek
-            <ol>
-                <li>Daftar Balai Pengobatan</li>
-                <li>Daftar Apotek</li>
-            </ol>
-        </li>
-        <li>Transaksi Pembelian dan Transaksi Resep
-            <ol>
-                <li>Daftar Transaksi Pembelian</li>
-                <li>Daftar Transaksi Resep</li>
-            </ol>
-        </li>
-        <li>Daftar Produk Apotek</li>
-        <li>Daftar List Produk Dibeli</li>
-        <li>Daftar Pengantaran Farmasi</li>
-        <li>Obat dan Alat Medis
-            <ol>
-                <li>Daftar Obat</li>
-                <li>Daftar Alat Medis</li>
-            </ol>
-        </li>
-    </ul>
+    
+    <a href="/user-profile/">
+        <button style="margin-top: 20px;" class="btn btn-info" type='submit'>Profil</button>
+    </a>
+    
+    <!-- Balai Pengobatan dan Apotek  -->
+    <div class="btn-group">
+        <button id="dropdown-btn" type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            Balai Pengobatan dan Apotek
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="/balai-pengobatan/tabel/">Daftar Balai Pengobatan</a>
+            <a class="dropdown-item" href="/apotek/tabel/">Daftar Apotek</a>
+        </div>
+    </div>
+
+    <!-- Transaksi Pembelian dan Transaksi Resep  -->
+    <div class="btn-group">
+        <button id="dropdown-btn" type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            Transaksi Pembelian dan Transaksi Resep
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="/transaksi-pembelian/tabel/">Daftar Transaksi Pembelian</a>
+            <a class="dropdown-item" href="#">Daftar Transaksi Resep</a>
+        </div>
+    </div>
+
+    <a href="/produk-apotek/tabel/">
+        <button style="margin-top: 20px;" class="btn btn-dark" type='submit'>Daftar Produk Apotek</button>
+    </a>
+
+    <a href="/list-produk-dibeli/tabel/">
+        <button style="margin-top: 20px;" class="btn btn-dark" type='submit'>Daftar List Produk Dibeli</button>
+    </a>
+
+    <a href="/pengantaran-farmasi/tabel/">
+        <button style="margin-top: 20px;" class="btn btn-dark" type='submit'>Daftar Pengantaran Farmasi</button>
+    </a>
+
+    <!-- Obat dan Alat Medis  -->
+    <div class="btn-group">
+        <button id="dropdown-btn" type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            Obat dan Alat Medis
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="/obat/tabel/">Daftar Obat</a>
+            <a class="dropdown-item" href="#">Daftar Alat Medis</a>
+        </div>
+    </div>
 
 </div>
 

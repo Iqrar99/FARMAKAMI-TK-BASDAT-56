@@ -5,13 +5,13 @@
     <h2>Apakah anda yakin untuk logout Dari FarmaKami?</h2>
     <br>
     <div class="col">
+        <form action="backHome" method="GET">
+            <button class="btn btn-primary" name='cancel' type='submit'>Kembali</button>
+        </form>
+        <br>
         <form action="" method="POST">
             {% csrf_token %}
             <button class="btn btn-danger" name='logout' type='submit'>Ya, Logout</button>
-        </form>
-        <br>
-        <form action="backHome" method="GET">
-            <button class="btn btn-primary" name='cancel' type='submit'>Kembali</button>
         </form>
     </div>
 
