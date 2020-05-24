@@ -33,7 +33,7 @@ def user_login(request):
                 request.session['email'] = response['email']
                 request.session['nama'] = get_name(response['email'])
 
-                return redirect(f'/navigate/{role}')
+                return redirect('/user-profile')
 
     response['form'] = form
 

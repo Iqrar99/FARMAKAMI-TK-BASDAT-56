@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect
 from django.db import connection
-# Create your views here.
-
 
 def user_profile(request):
     if 'email' not in request.session:
