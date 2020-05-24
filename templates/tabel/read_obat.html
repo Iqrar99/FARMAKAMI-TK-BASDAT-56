@@ -85,7 +85,18 @@
                     <td>{{ obat.aturan_pakai }}</td>
                     <td>{{ obat.kontraindikasi }}</td>
                     <td>{{ obat.bentuk_kesediaan }}</td>
-                    <td>TO BE ADDED</td>
+                    {% if role == 'admin-apotek' or role == 'cs' %}
+                        <td>
+                            <a href="">
+                                <button>Update</button>
+                            </a>
+                            <a href="">
+                                <button>Delete</button>
+                            </a>
+                        </td>
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>

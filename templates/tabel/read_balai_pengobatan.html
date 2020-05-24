@@ -65,11 +65,11 @@
         </colgroup>
         <thead>
             <tr>
-                <th class="tg-c3ow">id_balai</th>
-                <th class="tg-baqh">alamat_balai</th>
-                <th class="tg-baqh">nama_balai</th>
-                <th class="tg-baqh">jenis_balai</th>
-                <th class="tg-baqh">telepon_balai</th>
+                <th class="tg-c3ow">ID Balai</th>
+                <th class="tg-baqh">Alamat Balai</th>
+                <th class="tg-baqh">Nama Balai</th>
+                <th class="tg-baqh">Jenis Balai</th>
+                <th class="tg-baqh">Telepon Balai</th>
                 <th class="tg-baqh">Action</th>
             </tr>
         </thead>
@@ -82,7 +82,18 @@
                     <td>{{ balai.nama_balai }}</td>
                     <td>{{ balai.jenis_balai }}</td>
                     <td>{{ balai.telepon_balai }}</td>
-                    <td>TO BE ADDED</td>
+                    {% if role == 'admin-apotek' %}
+                        <td>
+                            <a href="">
+                                <button>Update</button>
+                            </a>
+                            <a href="">
+                                <button>Delete</button>
+                            </a>
+                        </td>
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>

@@ -1,9 +1,22 @@
 from django.shortcuts import render
+from django.db import connection
 from .forms import CreateProdukApotekForm, UpdateProdukApotekForm 
 
 # Create your views here.
 def tabel_produk_apotek(request):
-	context = {}
+	query = """SELECT * FROM produk_apotek;"""
+
+	cursor = connection.cursor()
+	cursor.execute("SET SEARCH_PATH TO farmakami;")
+	cursor.execute(query)
+
+	data_produk_apotek = fetch(cursor)
+
+	context = {
+	    'data_produk_apotek' : data_produk_apotek,
+	    'role': request.session['role']
+	}
+
 	return render(request, 'tabel/read_produk_apotek.html', context)
 
 def buat_produk_apotek(request):
@@ -19,3 +32,6 @@ def update_produk_apotek(request):
 	return render(request, 'update/update_produk_apotek.html', context)
 
 
+def fetch(cursor):
+	columns = [col[0] for col in cursor.description]
+	return [dict(zip(columns, row)) for row in cursor.fetchall()]

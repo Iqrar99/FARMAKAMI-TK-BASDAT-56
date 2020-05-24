@@ -13,7 +13,8 @@ def tabel_obat(request):
     data_obat = fetch(cursor)
 
     context = {
-        'data_obat': data_obat
+        'data_obat': data_obat,
+        'role': request.session['role']
     }
 
     return render(request, 'tabel/read_obat.html', context)

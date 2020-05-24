@@ -65,101 +65,43 @@
             <col style="width: 280px">
             <col style="width: 90px">
         </colgroup>
-        <tr>
-            <th class="tg-c3ow">ID Apotek</th>
-            <th class="tg-baqh">Nama Apotek</th>
-            <th class="tg-baqh">Alamat Apotek</th>
-            <th class="tg-baqh">No Telp Apotek</th>
-            <th class="tg-baqh">Nama Penyelenggara</th>
-            <th class="tg-baqh">No SIA Penyelenggara</th>
-            <th class="tg-baqh">Email Penyelenggara</th>
-            <th class="tg-baqh">Action</th>
-        </tr>
-        <tr>
-            <td class="tg-0lax">AP01</td>
-            <td class="tg-0lax">ETERNAL</td>
-            <td class="tg-0lax">Ap #805-7596 Fermentum St.</td>
-            <td class="tg-0lax">033-310-9272</td>
-            <td class="tg-0lax">Sutan Bagindo Rajo</td>
-            <td class="tg-0lax">3756409187</td>
-            <td class="tg-0lax">ut.eros@quam.co.uk</td>
-            <td class="tg-0lax">
-                <a href="">
-                    <button>Update</button>
-                </a>
-                <a href="">
-                    <button>Delete</button>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td class="tg-0lax">AP02</td>
-            <td class="tg-0lax">COVID</td>
-            <td class="tg-0lax">1433 Eget, Avenue</td>
-            <td class="tg-0lax">046-550-7299</td>
-            <td class="tg-0lax">Alexander Graham Bell</td>
-            <td class="tg-0lax">2674589991</td>
-            <td class="tg-0lax">dolor.vitae.dolor@sitamet.edu</td>
-            <td class="tg-0lax">
-                <a href="">
-                    <button>Update</button>
-                </a>
-                <a href="">
-                    <button>Delete</button>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td class="tg-0lax">AP03</td>
-            <td class="tg-0lax">PASTI SEMBUH</td>
-            <td class="tg-0lax">8230 Dui. St.</td>
-            <td class="tg-0lax">038-638-4022</td>
-            <td class="tg-0lax">Doctor Strange</td>
-            <td class="tg-0lax">2219003281</td>
-            <td class="tg-0lax">Donec.fringilla@maurissagittisplacerat.com</td>
-            <td class="tg-0lax">
-                <a href="">
-                    <button>Update</button>
-                </a>
-                <a href="">
-                    <button>Delete</button>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td class="tg-0lax">AP04</td>
-            <td class="tg-0lax">ANUGERAH</td>
-            <td class="tg-0lax">983-9461 Fermentum St.</td>
-            <td class="tg-0lax">018-166-4697</td>
-            <td class="tg-0lax">Hamba Allah</td>
-            <td class="tg-0lax">2339045621</td>
-            <td class="tg-0lax">mi.tempor@lacusQuisquepurus.net</td>
-            <td class="tg-0lax">
-                <a href="">
-                    <button>Update</button>
-                </a>
-                <a href="">
-                    <button>Delete</button>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td class="tg-0lax">AP05</td>
-            <td class="tg-0lax">TANPA NAMA</td>
-            <td class="tg-0lax">Ap #733-2766 Risus. Av.</td>
-            <td class="tg-0lax">054-468-1316</td>
-            <td class="tg-0lax">Hanya Manusia Biasa</td>
-            <td class="tg-0lax">1228975267</td>
-            <td class="tg-0lax">eget@Fusce.ca</td>
-            <td class="tg-0lax">
-                <a href="">
-                    <button>Update</button>
-                </a>
-                <a href="">
-                    <button>Delete</button>
-                </a>
-            </td>
-        </tr>
+        <thead>
+            <tr>
+                <th class="tg-c3ow">ID Apotek</th>
+                <th class="tg-baqh">Nama Apotek</th>
+                <th class="tg-baqh">Alamat Apotek</th>
+                <th class="tg-baqh">No Telp Apotek</th>
+                <th class="tg-baqh">Nama Penyelenggara</th>
+                <th class="tg-baqh">No SIA Penyelenggara</th>
+                <th class="tg-baqh">Email Penyelenggara</th>
+                <th class="tg-baqh">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in data_apotek %}
+                <tr>
+                    <td>{{ data.id_apotek }}</td>
+                    <td>{{ data.nama_apotek }}</td>
+                    <td>{{ data.alamat_apotek }}</td>
+                    <td>{{ data.telepon_apotek }}</td>
+                    <td>{{ data.nama_penyelenggara }}</td>
+                    <td>{{ data.no_sia }}</td>
+                    <td>{{ data.email }}</td>
+                    {% if role == 'admin-apotek' %}
+                        <td>
+                            <a href="">
+                                <button>Update</button>
+                            </a>
+                            <a href="">
+                                <button>Delete</button>
+                            </a>
+                        </td>
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </div>
 

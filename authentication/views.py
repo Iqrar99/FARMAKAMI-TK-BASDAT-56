@@ -10,23 +10,23 @@ def user_login(request):
     
     if 'email' in request.session:
         return redirect(f"/navigate/{request.session['role']}")
-
+    
     response = {}
 
     form = LoginForm(request.POST or None)
     if (request.method == 'POST' and form.is_valid()):
         response['email'] = request.POST['email']
         response['password'] = request.POST['password']
-        response['invalid'] = False
+        response['error_msg'] = ""
 
         registered = is_registered(response['email'], response['password'])
         if not registered:
-            response['invalid'] = True
+            response['error_msg'] = "Invalid login atau user belum terdaftar."
 
         else:
             role = role_check(response['email'])
             if role == None:
-                response['invalid'] = True
+                response['error_msg'] = "Role tidak ditemukan."
 
             else:
                 request.session['role'] = role

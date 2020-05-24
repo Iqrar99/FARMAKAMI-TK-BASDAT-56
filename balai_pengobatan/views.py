@@ -13,7 +13,8 @@ def tabel_balai_pengobatan(request):
     data_balai = fetch(cursor)
     
     context = {
-        'data_balai' : data_balai
+        'data_balai' : data_balai,
+        'role' : request.session['role']
     }
 
     return render(request, 'tabel/read_balai_pengobatan.html', context)
