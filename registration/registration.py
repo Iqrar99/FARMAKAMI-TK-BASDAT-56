@@ -113,6 +113,27 @@ class Registration(object):
         else:
             print("REGISTRASI KURIR GAGAL")
 
+    def register_cs(self, no_ktp:str, email:str, no_sia:str, **data):
+        """
+        function untuk mendaftarkan input ke dalam tabel CS.
+        """
+        status = self.__register_pengguna(email, data['password'], data['nama'], data['telp'])
+        status = status and self.__register_apoteker(email)
+
+        if status:
+            cursor = connection.cursor()
+            cursor.execute("SET SEARCH_PATH TO farmakami;")
+
+            query = f"""
+            INSERT INTO cs
+            VALUES ('{no_ktp}', '{email}', '{no_sia}');
+            """
+            cursor.execute(query)
+            print("REGISTRASI CS SUKSES")
+
+        else:
+            print("REGISTRASI CS GAGAL")
+
 
     def __fetch(self, cursor):
         columns = [col[0] for col in cursor.description]
