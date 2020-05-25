@@ -7,7 +7,17 @@
     <form action="" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
+        
         <button class="btn btn-primary" name='register' type='submit'>Register</button>
+        
+        {% if registered != "" %}
+            <p style="color: green;">{{ registered }}</p>
+        {% else %}
+            {% for e in error %}
+                <p style="color: red;">{{ e }}</p>
+            {% endfor %}
+        {% endif %}
+        
     </form>
 </div>
 

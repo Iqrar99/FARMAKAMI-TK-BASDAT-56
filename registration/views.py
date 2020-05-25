@@ -1,7 +1,10 @@
-from django.shortcuts import render, reverse
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from django.shortcuts import render, reverse, redirect
 from .forms import AdminForm, ConsumerForm, KurirForm, CSForm
+from .registration import Registration
 
-# Create your views here.
+
 def main_menu_register(request):
     context = {
         'register_admin' : reverse('register_admin'),
@@ -13,9 +16,50 @@ def main_menu_register(request):
     return render(request, 'register.html', context)
 
 def register_admin(request):
+    """
+    function untuk mendaftarkan admin.
+    """
+    if 'email' in request.session:
+        return redirect('/user-profile/')
+
+    form = AdminForm(request.POST or None)
     context = {
-        'form' : AdminForm(request.POST or None)
+        'form' : form,
+        'error' : []
     }
+
+    if (request.method == 'POST' and form.is_valid()):
+        valid = True
+        
+        email = request.POST['email']
+        nama_lengkap = request.POST['nama_lengkap']
+        
+        # validasi password
+        try:
+            password = request.POST['password']
+            validate_password(password)
+
+        except ValidationError as error:
+            context['error'].extend(list(map(lambda msg: msg.replace("This", "The"), error)))
+            valid = valid and False
+
+        # validasi nomor telepon
+        no_telp = request.POST['no_telp']
+        if not no_telp.isnumeric():
+            context['error'].append('The phone number should contains number only.')
+            valid = valid and False
+
+        if valid:
+            reg = Registration()
+            context['registered'] = ""
+
+            reg.register_admin(email, password, nama = nama_lengkap, telp = no_telp)
+            context['registered'] = "New user has been registered."
+            # try:
+            #     reg.register_admin(email, password, nama = nama_lengkap, telp = no_telp)
+            #     context['registered'] = "New user has been registered."
+            # except:
+            #     print('REGISTRASI GAGAL')
 
     return render(request, 'register_admin.html', context)
 
