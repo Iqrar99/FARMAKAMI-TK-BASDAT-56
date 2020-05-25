@@ -8,11 +8,11 @@ class Registration(object):
     def __init__(self):
         super().__init__()
 
-    def register_admin(self, email:str, password:str, **data):
+    def register_admin(self, email:str, **data):
         """
         function untuk mendaftarkan input ke tabel ADMIN_APOTEK.
         """
-        status = self.__register_pengguna(email, password, data['nama'], data['telp'])
+        status = self.__register_pengguna(email, data['password'], data['nama'], data['telp'])
         status = status and self.__register_apoteker(email)
         
         if status:
@@ -77,6 +77,42 @@ class Registration(object):
             print("REGISTRASI APOTEKER GAGAL")
 
         return False
+
+    def register_kurir(self, email:str, perusahaan:str, **data):
+        """
+        function untuk mendaftarkan input ke tabel KURIR.
+        """
+        status = self.__register_pengguna(email, data['password'], data['nama'], data['telp'])
+
+        if status:
+            cursor = connection.cursor()
+            cursor.execute("SET SEARCH_PATH TO farmakami;")
+            
+            # generate id kurir
+            cursor.execute(
+                """
+                SELECT id_kurir FROM kurir
+                ORDER BY id_kurir DESC
+                LIMIT 1;
+                """
+            )
+            latest_id = int(self.__fetch(cursor)[0]['id_kurir'][-2:])
+            new_id = latest_id + 1
+            if new_id < 10:
+                new_id = 'KU0' + str(new_id)
+            else:
+                new_id = 'KU' + str(new_id)
+
+            query = f"""
+            INSERT INTO kurir
+            VALUES ('{new_id}', '{email}', '{perusahaan}');
+            """
+            cursor.execute(query)
+            print("REGISTRASI KURIR SUKSES")
+
+        else:
+            print("REGISTRASI KURIR GAGAL")
+
 
     def __fetch(self, cursor):
         columns = [col[0] for col in cursor.description]

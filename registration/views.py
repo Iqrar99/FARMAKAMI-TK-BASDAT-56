@@ -40,26 +40,27 @@ def register_admin(request):
             validate_password(password)
 
         except ValidationError as error:
-            context['error'].extend(list(map(lambda msg: msg.replace("This", "The"), error)))
+            context['error'].extend(
+                list(map(lambda msg: msg.replace("This", "The"), error)))
             valid = valid and False
 
         # validasi nomor telepon
         no_telp = request.POST['no_telp']
         if not no_telp.isnumeric():
-            context['error'].append('The phone number should contains number only.')
+            context['error'].append(
+                'The phone number should contains number only.')
             valid = valid and False
 
         if valid:
             reg = Registration()
             context['registered'] = ""
 
-            reg.register_admin(email, password, nama = nama_lengkap, telp = no_telp)
-            context['registered'] = "New user has been registered."
-            # try:
-            #     reg.register_admin(email, password, nama = nama_lengkap, telp = no_telp)
-            #     context['registered'] = "New user has been registered."
-            # except:
-            #     print('REGISTRASI GAGAL')
+            try:
+                reg.register_admin(
+                    email, password = password, nama = nama_lengkap, telp = no_telp)
+                context['registered'] = "New user has been registered."
+            except:
+                print('REGISTRASI GAGAL')
 
     return render(request, 'register_admin.html', context)
 
@@ -73,9 +74,58 @@ def register_consumer(request):
 
 
 def register_kurir(request):
+    """
+    function untuk mendaftarkan kurir.
+    """
+    if 'email' in request.session:
+        return redirect('/user-profile/')
+
+    form = KurirForm(request.POST or None)
     context = {
-        'form' : KurirForm(request.POST or None)
+        'form': form,
+        'error': []
     }
+
+    if (request.method == 'POST' and form.is_valid()):
+        valid = True
+
+        email = request.POST['kurir_email']
+        nama_lengkap = request.POST['kurir_full_name']
+        nama_perusahaan = request.POST['kurir_company_name']
+
+        # validasi password
+        try:
+            password = request.POST['kurir_password']
+            validate_password(password)
+
+        except ValidationError as error:
+            context['error'].extend(
+                list(map(lambda msg: msg.replace("This", "The"), error)))
+            valid = valid and False
+
+        # validasi nomor telepon
+        no_telp = request.POST['kurir_telp']
+        if not no_telp.isnumeric():
+            context['error'].append(
+                'The phone number should contains number only.')
+            valid = valid and False
+
+        if valid:
+            reg = Registration()
+            context['registered'] = ""
+
+            try:
+                reg.register_kurir(
+                    email,
+                    nama_perusahaan,
+                    password = password,
+                    nama = nama_lengkap,
+                    telp = no_telp
+                )
+                context['registered'] = "New user has been registered."
+            except:
+                print('REGISTRASI GAGAL')
+
 
     return render(request, 'register_kurir.html', context)
 
