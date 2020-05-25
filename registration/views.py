@@ -1,5 +1,6 @@
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+from django.db import connection
 from django.shortcuts import render, reverse, redirect
 from .forms import AdminForm, ConsumerForm, KurirForm, CSForm
 from .registration import Registration
@@ -31,7 +32,12 @@ def register_admin(request):
     if (request.method == 'POST' and form.is_valid()):
         valid = True
         
+        # validasi email
         email = request.POST['email']
+        if check_email(email):
+            valid = valid and False
+            context['error'].append('The email has been registered before.')
+
         nama_lengkap = request.POST['nama_lengkap']
         
         # validasi password
@@ -51,9 +57,9 @@ def register_admin(request):
                 'The phone number should contains number only.')
             valid = valid and False
 
+        context['registered'] = ""
         if valid:
             reg = Registration()
-            context['registered'] = ""
 
             try:
                 reg.register_admin(
@@ -89,9 +95,14 @@ def register_kurir(request):
     if (request.method == 'POST' and form.is_valid()):
         valid = True
 
-        email = request.POST['kurir_email']
         nama_lengkap = request.POST['kurir_full_name']
         nama_perusahaan = request.POST['kurir_company_name']
+
+        # validasi email
+        email = request.POST['kurir_email']
+        if check_email(email):
+            valid = valid and False
+            context['error'].append('The email has been registered before.')
 
         # validasi password
         try:
@@ -110,9 +121,9 @@ def register_kurir(request):
                 'The phone number should contains number only.')
             valid = valid and False
 
+        context['registered'] = ""
         if valid:
             reg = Registration()
-            context['registered'] = ""
 
             try:
                 reg.register_kurir(
@@ -136,3 +147,21 @@ def register_cs(request):
     }
 
     return render(request, 'register_cs.html', context)
+
+def check_email(email:str) -> bool:
+    """
+    function untuk memvalidasi apakah email pernah terdaftar atau belum.
+    """
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(f"SELECT email FROM pengguna WHERE email = '{email}';")
+
+    columns = [col[0] for col in cursor.description]
+    result = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+    if len(result) == 0:
+        print("EMAIL BELUM TERDAFTAR")
+        return False
+    
+    print("EMAIL SUDAH TERDAFTAR")
+    return True
