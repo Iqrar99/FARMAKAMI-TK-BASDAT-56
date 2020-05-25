@@ -29,6 +29,104 @@ class Registration(object):
         else:
             print("REGISTRASI ADMIN APOTEK GAGAL")
 
+    def register_kurir(self, email:str, perusahaan:str, **data):
+        """
+        function untuk mendaftarkan input ke tabel KURIR.
+        """
+        status = self.__register_pengguna(email, data['password'], data['nama'], data['telp'])
+
+        if status:
+            cursor = connection.cursor()
+            cursor.execute("SET SEARCH_PATH TO farmakami;")
+            
+            # generate id kurir
+            cursor.execute(
+                """
+                SELECT id_kurir FROM kurir
+                ORDER BY id_kurir DESC
+                LIMIT 1;
+                """
+            )
+            latest_id = int(self.__fetch(cursor)[0]['id_kurir'][-2:])
+            new_id = latest_id + 1
+            if new_id < 10:
+                new_id = 'KU0' + str(new_id)
+            else:
+                new_id = 'KU' + str(new_id)
+
+            query = f"""
+            INSERT INTO kurir
+            VALUES ('{new_id}', '{email}', '{perusahaan}');
+            """
+            cursor.execute(query)
+            print("REGISTRASI KURIR SUKSES")
+
+        else:
+            print("REGISTRASI KURIR GAGAL")
+
+    def register_consumer(self, email:str, sex:str, birthdate, **data):
+        """
+        function untuk mendaftarkan input ke dalam tabel KONSUMEN.
+        """
+        status = self.__register_pengguna(email, data['password'], data['nama'], data['telp'])
+        
+        if status:
+            cursor = connection.cursor()
+            cursor.execute("SET SEARCH_PATH TO farmakami;")
+
+            # generate id konsumen
+            cursor.execute(
+                """
+                SELECT id_konsumen FROM konsumen
+                ORDER BY id_konsumen DESC
+                LIMIT 1;
+                """
+            )
+            latest_id = int(self.__fetch(cursor)[0]['id_konsumen'][-2:])
+            new_id = latest_id + 1
+            if new_id < 10:
+                new_id = 'K0' + str(new_id)
+            else:
+                new_id = 'K' + str(new_id)
+
+            year = birthdate.year
+            month = birthdate.month
+            day = birthdate.day
+
+            query = f"""
+            INSERT INTO konsumen
+            VALUES ('{new_id}', '{email}', '{sex}', '{year}-{month}-{day}');
+            """
+            cursor.execute(query)
+
+            print("REGISTRASI KONSUMEN SUKSES")
+
+            self.__register_alamat_konsumen(new_id, data['alamat'], data['status'])
+
+        else:
+            print("REGISTRASI KONSUMEN GAGAL")
+
+
+    def register_cs(self, no_ktp:str, email:str, no_sia:str, **data):
+        """
+        function untuk mendaftarkan input ke dalam tabel CS.
+        """
+        status = self.__register_pengguna(email, data['password'], data['nama'], data['telp'])
+        status = status and self.__register_apoteker(email)
+
+        if status:
+            cursor = connection.cursor()
+            cursor.execute("SET SEARCH_PATH TO farmakami;")
+
+            query = f"""
+            INSERT INTO cs
+            VALUES ('{no_ktp}', '{email}', '{no_sia}');
+            """
+            cursor.execute(query)
+            print("REGISTRASI CS SUKSES")
+
+        else:
+            print("REGISTRASI CS GAGAL")
 
     def __register_pengguna(self, email:str, password:str, nama:str, telp:str) -> bool:
         """
@@ -78,62 +176,25 @@ class Registration(object):
 
         return False
 
-    def register_kurir(self, email:str, perusahaan:str, **data):
+    def __register_alamat_konsumen(self, id_konsumen:str, alamat:str, status:str):
         """
-        function untuk mendaftarkan input ke tabel KURIR.
+        function untuk mendaftarkan alamat konsumen.
+        function ini dieksekusi setelah mendaftarkan input ke tabel KONSUMEN.
         """
-        status = self.__register_pengguna(email, data['password'], data['nama'], data['telp'])
+        query = f"""
+        INSERT INTO alamat_konsumen
+        VALUES ('{id_konsumen}', '{alamat}', '{status}');
+        """
 
-        if status:
-            cursor = connection.cursor()
-            cursor.execute("SET SEARCH_PATH TO farmakami;")
-            
-            # generate id kurir
-            cursor.execute(
-                """
-                SELECT id_kurir FROM kurir
-                ORDER BY id_kurir DESC
-                LIMIT 1;
-                """
-            )
-            latest_id = int(self.__fetch(cursor)[0]['id_kurir'][-2:])
-            new_id = latest_id + 1
-            if new_id < 10:
-                new_id = 'KU0' + str(new_id)
-            else:
-                new_id = 'KU' + str(new_id)
+        cursor = connection.cursor()
+        cursor.execute("SET SEARCH_PATH TO farmakami;")
 
-            query = f"""
-            INSERT INTO kurir
-            VALUES ('{new_id}', '{email}', '{perusahaan}');
-            """
+        try:
             cursor.execute(query)
-            print("REGISTRASI KURIR SUKSES")
+            print("REGISTRASI ALAMAT KONSUMEN SUKSES")
 
-        else:
-            print("REGISTRASI KURIR GAGAL")
-
-    def register_cs(self, no_ktp:str, email:str, no_sia:str, **data):
-        """
-        function untuk mendaftarkan input ke dalam tabel CS.
-        """
-        status = self.__register_pengguna(email, data['password'], data['nama'], data['telp'])
-        status = status and self.__register_apoteker(email)
-
-        if status:
-            cursor = connection.cursor()
-            cursor.execute("SET SEARCH_PATH TO farmakami;")
-
-            query = f"""
-            INSERT INTO cs
-            VALUES ('{no_ktp}', '{email}', '{no_sia}');
-            """
-            cursor.execute(query)
-            print("REGISTRASI CS SUKSES")
-
-        else:
-            print("REGISTRASI CS GAGAL")
-
+        except:
+            print("REGISTRASI ALAMAT KONSUMEN GAGAL")
 
     def __fetch(self, cursor):
         columns = [col[0] for col in cursor.description]

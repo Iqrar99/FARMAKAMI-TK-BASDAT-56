@@ -11,7 +11,7 @@
         <button class="btn btn-primary" name='register' type='submit'>Register</button>
         
         {% if registered != "" %}
-            <p style="color: green;">{{ registered }}</p>
+            <h4 style="color: green;">{{ registered }}</h4>
         {% else %}
             {% for e in error %}
                 <p style="color: red;">{{ e }}</p>

@@ -33,8 +33,8 @@ class ConsumerForm(forms.Form):
     consumer_telp = forms.CharField(label='No. telp', max_length=15, required=True)
 
     sex_choices = (
-        ('L', 'Laki-Laki'),
-        ('P', 'Perempuan')
+        ('M', 'Laki-Laki'),
+        ('F', 'Perempuan')
     )
     consumer_sex = forms.ChoiceField(
         label='Jenis Kelamin',
@@ -46,7 +46,17 @@ class ConsumerForm(forms.Form):
         widget=forms.SelectDateWidget(years=range(1900,2100)),
         required=True
     )
-    consumer_address = forms.CharField(label='Alamat', max_length=500)
+    
+    consumer_address = forms.CharField(label='Alamat', max_length=500, required=True)
+    
+    consumer_address_status = forms.ChoiceField(
+        label='Status Alamat',
+        choices= (
+            ('Alamat Utama', 'Alamat Utama'),
+            ('Alamat Kedua', 'Alamat Kedua'),
+            ('Alamat Ketiga', 'Alamat Ketiga')
+        )
+    )
 
 class KurirForm(forms.Form):
     kurir_email = forms.EmailField(label='Email', required=True)

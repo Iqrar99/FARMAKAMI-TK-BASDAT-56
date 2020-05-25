@@ -1,3 +1,4 @@
+from datetime import date
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db import connection
@@ -72,9 +73,72 @@ def register_admin(request):
 
 
 def register_consumer(request):
+    """
+    function untuk mendaftarkan konsumen.
+    """
+    if 'email' in request.session:
+        return redirect('/user-profile/')
+
+    form = ConsumerForm(request.POST or None)
     context = {
-        'form' : ConsumerForm(request.POST or None)
+        'form': form,
+        'error': []
     }
+
+    if (request.method == 'POST' and form.is_valid()):
+        valid = True
+        print(request.POST)
+
+        nama_lengkap = request.POST['consumer_full_name']
+        sex = request.POST['consumer_sex']
+        address = request.POST['consumer_address']
+        status = request.POST['consumer_address_status']
+        
+        year = request.POST['consumer_birth_date_year']
+        month = request.POST['consumer_birth_date_month']
+        day = request.POST['consumer_birth_date_day']
+        birthdate = date(int(year), int(month), int(day))
+
+        # validasi email
+        email = request.POST['consumer_email']
+        if __check_email(email):
+            valid = valid and False
+            context['error'].append('The email has been registered before.')
+
+        # validasi password
+        try:
+            password = request.POST['consumer_password']
+            validate_password(password)
+
+        except ValidationError as error:
+            context['error'].extend(
+                list(map(lambda msg: msg.replace("This", "The"), error)))
+            valid = valid and False
+
+        # validasi nomor telepon
+        no_telp = request.POST['consumer_telp']
+        if not no_telp.isnumeric():
+            context['error'].append(
+                'The phone number should contains number only.')
+            valid = valid and False
+
+        if valid:
+            reg = Registration()
+            
+            try:
+                reg.register_consumer(
+                    email,
+                    sex,
+                    birthdate,
+                    password=password,
+                    nama=nama_lengkap,
+                    telp=no_telp,
+                    alamat=address,
+                    status=status
+                )
+                context['registered'] = "New user has been registered."
+            except:
+                print('REGISTRASI GAGAL')
 
     return render(request, 'register_consumer.html', context)
 
