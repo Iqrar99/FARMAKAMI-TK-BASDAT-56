@@ -87,7 +87,6 @@ def register_consumer(request):
 
     if (request.method == 'POST' and form.is_valid()):
         valid = True
-        print(request.POST)
 
         nama_lengkap = request.POST['consumer_full_name']
         sex = request.POST['consumer_sex']
@@ -294,6 +293,9 @@ def __check_email(email:str) -> bool:
     if len(result) == 0:
         print("EMAIL BELUM TERDAFTAR")
         return False
+
+    print("EMAIL SUDAH TERDAFTAR")
+    return True
 
 def __check_ktp(ktp:str) -> bool:
     """
