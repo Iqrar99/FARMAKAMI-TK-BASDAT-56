@@ -116,7 +116,6 @@ def __create(alamat, nama_balai, jenis, telp, id_apotek):
     else:
         new_id = 'BA' + str(new_id)
 
-
     telp = "NULL" if telp == '' else "'"+telp+"'"
 
     # balai pengobatan
