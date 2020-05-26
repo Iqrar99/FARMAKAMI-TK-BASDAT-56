@@ -4,17 +4,33 @@ from datetime import datetime
 from .forms import TransaksiPembelianForm, UpdateTransaksiPembelian
 
 def tabel_transaksi_pembelian(request):
-    query = """SELECT * FROM transaksi_pembelian;"""
+    if 'email' not in request.session:
+        return redirect('/login/')
 
+    nama = ""
+    
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO farmakami;")
-    cursor.execute(query)
+
+    if request.session['role'] == 'konsumen': 
+        query = f"""
+            SELECT * FROM transaksi_pembelian
+            WHERE id_konsumen = '{get_id_konsumen(request)}';
+        """
+        cursor.execute(query)
+
+        nama = request.session['nama']
+    
+    else:
+        query = """SELECT * FROM transaksi_pembelian;"""
+        cursor.execute(query)
 
     data_transaksi_pembelian = __fetch(cursor)
     
     context = {
         'data_transaksi_pembelian' : data_transaksi_pembelian,
-        'role': request.session['role']
+        'role' : request.session['role'],
+        'nama' : nama
     }
 
     return render(request, 'tabel/read_transaksi_pembelian.html', context)
@@ -50,6 +66,25 @@ def update_transaksi_pembelian(request):
         'form': UpdateTransaksiPembelian(request.POST or None)
     }
     return render(request, 'update/update_transaksi_pembelian.html', context)
+
+def get_id_konsumen(request):
+    """
+    function untuk mendapatkan id konsumen
+    berdasarkan konsumen yang sedang login.
+    """
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+
+    email = request.session['email']
+    cursor.execute(
+        f"""
+        SELECT id_konsumen FROM konsumen
+        WHERE email = '{email}';
+        """
+    )
+
+    id_konsumen = __fetch(cursor)[0]
+    return id_konsumen['id_konsumen']
 
 def __create_transaksi_beli(id_konsumen):
     """
