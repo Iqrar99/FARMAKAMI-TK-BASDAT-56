@@ -1,69 +1,61 @@
 from django import forms
-
-ID_PR = [
-    ('pr001', 'PR001'),
-    ('pr002', 'PR002'),
-    ('pr003', 'PR003'),
-    ('pr004', 'PR004'),
-    ('pr005', 'PR005'),
-    ('pr006', 'PR006'),
-    ('pr007', 'PR007'),
-    ('pr008', 'PR008'),
-    ('pr009', 'PR009'),
-    ('pr010', 'PR010'),
-    ('pr011', 'PR011'),
-    ('pr012', 'PR012'),
-    ('pr013', 'PR013'),
-    ('pr014', 'PR014'),
-    ('pr015', 'PR015'),
-    ('pr016', 'PR016'),
-    ('pr017', 'PR017'),
-    ('pr018', 'PR018'),
-    ('pr019', 'PR019'),
-    ('pr020', 'PR020'),
-]
-
-ID_AP = [
-    ('ap01', 'AP01'),
-    ('ap02', 'AP02'),
-    ('ap03', 'AP03'),
-    ('ap04', 'AP04'),
-    ('ap05', 'AP05'),
-]
+from django.db import connection
 
 class CreateProdukApotekForm(forms.Form):
-    id_produk = forms.CharField(
+    def get_id_produk():
+        cursor = connection.cursor()
+        cursor.execute("SET SEARCH_PATH TO farmakami;")
+        cursor.execute("SELECT id_produk FROM produk;")
+
+        columns = [col[0] for col in cursor.description]
+        data_id = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+        packed_data = []
+        for data in data_id:
+            number = int(data['id_produk'][-3:])
+            packed_data.append((data['id_produk'], data['id_produk']))
+
+        return tuple(packed_data)
+
+    def get_id_apotek():
+        cursor = connection.cursor()
+        cursor.execute("SET SEARCH_PATH TO farmakami;")
+        cursor.execute("SELECT id_apotek FROM apotek;")
+
+        columns = [col[0] for col in cursor.description]
+        data_id = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+        packed_data = []
+        for data in data_id:
+            number = int(data['id_apotek'][-2:])
+            packed_data.append((data['id_apotek'], data['id_apotek']))
+
+        return tuple(packed_data)
+
+    id_produk = forms.ChoiceField(
         label='ID Produk',
-        widget=forms.Select(choices=ID_PR)
+        choices=get_id_produk()
     )
-    id_apotek = forms.CharField(
+    id_apotek = forms.ChoiceField(
         label='ID Apotek',
-        widget=forms.Select(choices=ID_AP)
+        choices=get_id_apotek()
     )
-    harga_jual = forms.CharField(
-        label='Harga Jual',
-        max_length=15,
-        required=True
-    )
+    harga_jual = forms.IntegerField(label='Harga Jual')
     satuan_penjualan = forms.CharField(
         label='Satuan Penjualan',
         max_length=5,
         required=True
     )  
-    stok = forms.CharField(
-        label='Stok',
-        max_length=10,
-        required=True
-    )
+    stok = forms.IntegerField(label='Stok')
 
 class UpdateProdukApotekForm(forms.Form):
     id_produk = forms.CharField(
         label='ID Produk',
-        widget=forms.Select(choices=ID_PR)
+        widget=forms.Select(choices=((1,1)))
     )
     id_apotek = forms.CharField(
         label='ID Apotek',
-        widget=forms.Select(choices=ID_AP)
+        widget=forms.Select(choices=((1,1)))
     )
     harga_jual = forms.CharField(
         label='Harga Jual',

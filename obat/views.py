@@ -20,7 +20,6 @@ def tabel_obat(request):
     return render(request, 'tabel/read_obat.html', context)
 
 def buat_obat(request):
-
     if 'email' not in request.session:
         return redirect('/login/')
 
