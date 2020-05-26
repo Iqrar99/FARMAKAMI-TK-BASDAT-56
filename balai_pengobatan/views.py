@@ -23,6 +23,9 @@ def buat_balai_pengobatan(request):
     if 'email' not in request.session:
         return redirect('/login/')
 
+    if request.session['role'] != 'admin-apotek':
+        return redirect(f'/navigate/{request.session["role"]}/')
+
     form = CreateBalaiPengobatanForm(request.POST or None)
     context = {
         'form' : form,
