@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.db import connection
 from .forms import CreateObatForm, UpdateObatForm
 
-# Create your views here.
 def tabel_obat(request):
+    if 'email' not in request.session:
+        return redirect('/login/')
+
     query = """SELECT * FROM obat;"""
 
     cursor = connection.cursor()
