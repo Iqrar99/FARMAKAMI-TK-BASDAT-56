@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.db import connection
 from .forms import CreateObatForm, UpdateObatForm
 
+
 def tabel_obat(request):
     if 'email' not in request.session:
         return redirect('/login/')
@@ -21,11 +22,12 @@ def tabel_obat(request):
 
     return render(request, 'tabel/read_obat.html', context)
 
+
 def buat_obat(request):
     if 'email' not in request.session:
         return redirect('/login/')
 
-    if request.session['role'] != 'admin-apotek':
+    if request.session['role'] != 'cs':
         return redirect(f'/navigate/{request.session["role"]}/')
 
     form = CreateObatForm(request.POST or None)
@@ -47,27 +49,29 @@ def buat_obat(request):
 
         aturan_pakai = "NULL" if aturan_pakai == '' else "'"+aturan_pakai+"'"
         kontraindikasi = "NULL" if kontraindikasi == '' else "'"+kontraindikasi+"'"
-        
+
         new_id_produk = __create_id_produk()
 
         try:
             __create_obat(new_id_produk, id_merk_obat, netto, dosis,
                           aturan_pakai, kontraindikasi, bentuk_kesediaan)
             print("SUKSES MENGINPUT OBAT")
-            
+
             return redirect('/obat/tabel/')
-        
+
         except:
             print("GAGAL MENGINPUT OBAT")
 
     return render(request, 'create/create_obat.html', context)
 
+
 def update_obat(request):
     context = {
-        'form' : UpdateObatForm(request.POST or None)
+        'form': UpdateObatForm(request.POST or None)
     }
 
     return render(request, 'update/update_obat.html', context)
+
 
 def delete_obat(request):
     id_target = request.POST["id_target"]
@@ -83,6 +87,7 @@ def delete_obat(request):
     )
 
     return redirect('/obat/tabel/')
+
 
 def __create_obat(id_produk, id_merk, netto, dosis, aturan, kontraindikasi, bentuk_kesediaan):
     """
@@ -114,6 +119,7 @@ def __create_obat(id_produk, id_merk, netto, dosis, aturan, kontraindikasi, bent
         """
     )
 
+
 def __create_id_produk() -> str:
     """
     function untuk membuat id produk yang baru.
@@ -136,7 +142,7 @@ def __create_id_produk() -> str:
         new_id = 'PR0' + str(new_id)
     else:
         new_id = 'PR' + str(new_id)
-    
+
     cursor.execute(f"INSERT INTO produk VALUES ('{new_id}');")
 
     print('PRODUK BARU BERHASIL DIINPUT')

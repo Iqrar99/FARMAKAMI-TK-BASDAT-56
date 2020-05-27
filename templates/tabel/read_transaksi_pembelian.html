@@ -1,5 +1,4 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <div class="form-group col-md-8 mx-auto" style="margin-top: 50px;">
   <h2>Data Transaksi Pembelian {{ nama }}</h2>
@@ -46,13 +45,13 @@
       vertical-align: bottom;
     }
   </style>
-  <table class="tg" style="table-layout: fixed; width: 960px">
+  <table class="tg" style="table-layout: fixed; width: 960px;">
     <colgroup>
-      <col style="width: 76px">
-      <col style="width: 209px">
-      <col style="width: 200px">
-      <col style="width: 133px">
-      <col style="width: 174px">
+      <col style="width: 76px;" />
+      <col style="width: 209px;" />
+      <col style="width: 200px;" />
+      <col style="width: 133px;" />
+      <col style="width: 174px;" />
     </colgroup>
 
     <thead>
@@ -67,28 +66,27 @@
 
     <tbody>
       {% for data in data_transaksi_pembelian %}
-        <tr>
-          <td>{{ data.id_transaksi_pembelian }}</td>
-          <td>{{ data.waktu_pembelian }}</td>
-          <td>{{ data.total_pembayaran }}</td>
-          <td>{{ data.id_konsumen }}</td>
-          {% if role == 'admin-apotek' %}
-            <td>
-                <a href="">
-                    <button>Update</button>
-                </a>
-                <a href="">
-                    <button>Delete</button>
-                </a>
-            </td>
-          {% else %}
-              <td>-</td>
-          {% endif %}
-        </tr>
-      
+      <tr>
+        <td>{{ data.id_transaksi_pembelian }}</td>
+        <td>{{ data.waktu_pembelian }}</td>
+        <td>{{ data.total_pembayaran }}</td>
+        <td>{{ data.id_konsumen }}</td>
+        {% if role == 'admin-apotek' %}
+        <td>
+          <a href="">
+            <button>Update</button>
+          </a>
+          <a href="">
+            <button>Delete</button>
+          </a>
+        </td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
+      </tr>
+
       {% endfor %}
     </tbody>
-    
   </table>
 </div>
 {% endblock content %}
