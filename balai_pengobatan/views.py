@@ -2,9 +2,6 @@ from django.shortcuts import render, redirect
 from django.db import connection
 from .forms import CreateBalaiPengobatanForm, UpdateBalaiPengobatanForm
 
-# Create your views here.
-
-
 def tabel_balai_pengobatan(request):
     if 'email' not in request.session:
         return redirect('/login/')
@@ -70,7 +67,6 @@ def buat_balai_pengobatan(request):
 
     return render(request, 'create/create_balai_pengobatan.html', context)
 
-
 def update_balai_pengobatan(request):
     context = {
         'form': UpdateBalaiPengobatanForm(request.POST or None)
@@ -78,6 +74,25 @@ def update_balai_pengobatan(request):
 
     return render(request, 'update/update_balai_pengobatan.html', context)
 
+def delete_balai(request):
+    """
+    function untuk menghapus data balai pengobatan.
+    """
+    id_balai = request.POST['id_balai']
+
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(
+        f"""
+        DELETE FROM balai_apotek
+        WHERE id_balai = '{id_balai}';
+        
+        DELETE FROM balai_pengobatan
+        WHERE id_balai = '{id_balai}';
+        """
+    )
+
+    return redirect('/balai-pengobatan/tabel/')
 
 def __check_alamat(alamat: str):
     """
@@ -100,7 +115,6 @@ def __check_alamat(alamat: str):
 
     print("ALAMAT SUDAH TERDAFTAR")
     return True
-
 
 def __create(alamat, nama_balai, jenis, telp, id_apotek):
     """
@@ -140,7 +154,6 @@ def __create(alamat, nama_balai, jenis, telp, id_apotek):
     VALUES ('{new_id}', '{id_apotek}');
     """
     cursor.execute(query)
-
 
 def __fetch(cursor):
     columns = [col[0] for col in cursor.description]

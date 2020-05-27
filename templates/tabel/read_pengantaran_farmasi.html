@@ -108,7 +108,7 @@
 
     <tbody>
       {% for data in data_pengantaran %}
-      <tr>
+      <tr id="{{ data.id_pengantaran }}">
         <td>{{ data.id_pengantaran }}</td>
         <td>{{ data.id_kurir }}</td>
         <td>{{ data.id_transaksi_pembelian }}</td>
@@ -121,9 +121,13 @@
           <a href="">
             <button>Update</button>
           </a>
-          <a href="">
-            <button>Delete</button>
-          </a>
+          <form method="POST">
+              {% csrf_token %}
+              <button type="submit"
+              onclick="deleteRowPengantaranFarmasi('{{ data.id_pengantaran }}', '{{ csrf_token }}')">
+                  Delete
+              </button>
+          </form>
         </td>
         {% else %}
         <td>-</td>

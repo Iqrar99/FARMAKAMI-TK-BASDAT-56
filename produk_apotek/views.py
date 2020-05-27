@@ -81,6 +81,29 @@ def update_produk_apotek(request):
     }
 	return render(request, 'update/update_produk_apotek.html', context)
 
+def delete_produk_apotek(request):
+	"""
+	function untuk menghapus data produk apotek pada baris yang diminta.
+	"""
+	id_produk = request.POST["id_produk"]
+	id_apotek = request.POST["id_apotek"]
+
+	cursor = connection.cursor()
+	cursor.execute("SET SEARCH_PATH TO farmakami;")
+	cursor.execute(
+        f"""
+		DELETE FROM list_produk_dibeli
+		WHERE id_apotek = '{id_apotek}'
+		AND id_produk = '{id_produk}';
+
+		DELETE FROM produk_apotek
+		WHERE id_produk = '{id_produk}'
+		AND id_apotek = '{id_apotek}';
+		"""
+    )
+
+	return redirect('/produk-apotek/tabel/')
+
 def __create_produk_apotek(harga, stok, satuan, id_produk, id_apotek):
 	"""
 	function untuk menambahkan produk apotek ke database.

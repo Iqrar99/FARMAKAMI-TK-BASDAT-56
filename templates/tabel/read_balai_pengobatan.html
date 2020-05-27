@@ -75,7 +75,7 @@
 
     <tbody>
       {% for balai in data_balai %}
-      <tr>
+      <tr id="{{ balai.id_balai }}">
         <td>{{ balai.id_balai }}</td>
         <td>{{ balai.alamat_balai }}</td>
         <td>{{ balai.nama_balai }}</td>
@@ -86,9 +86,13 @@
           <a href="">
             <button>Update</button>
           </a>
-          <a href="">
-            <button>Delete</button>
-          </a>
+          <form method="POST">
+              {% csrf_token %}
+              <button type="submit"
+              onclick="deleteRowBalai('{{ balai.id_balai }}', '{{ csrf_token }}')">
+                  Delete
+              </button>
+          </form>
         </td>
         {% else %}
         <td>-</td>
