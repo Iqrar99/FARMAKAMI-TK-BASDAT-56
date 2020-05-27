@@ -1,5 +1,24 @@
 /**
  * function untuk menghapus baris pada data obat.
+ * @param id_balai Primary Key
+ * @param token CSRF token
+ */
+function deleteRowBalai(id_balai, token) {
+    console.log(id_balai)
+
+    $.ajax({
+        headers: { "X-CSRFToken": token },
+        type: "POST",
+        url: "/balai-pengobatan/tabel/delete/",
+        data: { id_balai: id_balai },
+        success: function () {
+            console.log("Data sukses di kirim ke Django");
+        },
+    });
+}
+
+/**
+ * function untuk menghapus baris pada data obat.
  * @param id_obat Primary Key
  * @param token CSRF token
  */
