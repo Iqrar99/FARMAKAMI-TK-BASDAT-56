@@ -63,89 +63,40 @@
             <col style="width: 174px">
             <col style="width: 90px">
         </colgroup>
-        <tr>
-            <th class="tg-c3ow">id_balai</th>
-            <th class="tg-baqh">alamat_balai</th>
-            <th class="tg-baqh">nama_balai</th>
-            <th class="tg-baqh">jenis_balai</th>
-            <th class="tg-baqh">telepon_balai</th>
-            <th class="tg-baqh">Action</th>
-        </tr>
-        <tr>
-            <td class="tg-0lax">BA01</td>
-            <td class="tg-0lax">Jl. Brigjen S. Sudiarto 375</td>
-            <td class="tg-0lax">Balai Besar Wilayah Sungai Pemali - Juana</td>
-            <td class="tg-0lax">kesehatan</td>
-            <td class="tg-0lax">(024) 6722240</td>
-            <td class="tg-0lax">
-                <a href="">
-                    <button>Update</button>
-                </a>
-                <a href="">
-                    <button>Delete</button>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td class="tg-0lax">BA02</td>
-            <td class="tg-0lax">Jl.Kapten Tjok Agung Tresna No.9</td>
-            <td class="tg-0lax">Balai Wilayah Sungai Bali - Penida</td>
-            <td class="tg-0lax">bahasa</td>
-            <td class="tg-0lax">(0361) 234953</td>
-            <td class="tg-0lax">
-                <a href="">
-                    <button>Update</button>
-                </a>
-                <a href="">
-                    <button>Delete</button>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td class="tg-0lax">BA03</td>
-            <td class="tg-0lax">Jl. Mr. A.A.A. Maramis</td>
-            <td class="tg-0lax">Balai Wilayah Sungai Sulawesi I</td>
-            <td class="tg-0lax">lelang</td>
-            <td class="tg-0lax"></td>
-            <td class="tg-0lax">
-                <a href="">
-                    <button>Update</button>
-                </a>
-                <a href="">
-                    <button>Delete</button>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td class="tg-0lax">BA04</td>
-            <td class="tg-0lax">Jl. Jati Besar No.443</td>
-            <td class="tg-0lax">Balai Wilayah Sungai Maluku Utara</td>
-            <td class="tg-0lax">obligasi</td>
-            <td class="tg-0lax">(0921) 3128775</td>
-            <td class="tg-0lax">
-                <a href="">
-                    <button>Update</button>
-                </a>
-                <a href="">
-                    <button>Delete</button>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td class="tg-0lax">BA05</td>
-            <td class="tg-0lax">Jl. Sapta Taruna Raya</td>
-            <td class="tg-0lax">Balai Bendungan</td>
-            <td class="tg-0lax">rakyat</td>
-            <td class="tg-0lax">021-759-08364</td>
-            <td class="tg-0lax">
-                <a href="">
-                    <button>Update</button>
-                </a>
-                <a href="">
-                    <button>Delete</button>
-                </a>
-            </td>
-        </tr>
+        <thead>
+            <tr>
+                <th class="tg-c3ow">ID Balai</th>
+                <th class="tg-baqh">Alamat Balai</th>
+                <th class="tg-baqh">Nama Balai</th>
+                <th class="tg-baqh">Jenis Balai</th>
+                <th class="tg-baqh">Telepon Balai</th>
+                <th class="tg-baqh">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for balai in data_balai %}
+                <tr>
+                    <td>{{ balai.id_balai }}</td>
+                    <td>{{ balai.alamat_balai }}</td>
+                    <td>{{ balai.nama_balai }}</td>
+                    <td>{{ balai.jenis_balai }}</td>
+                    <td>{{ balai.telepon_balai }}</td>
+                    {% if role == 'admin-apotek' %}
+                        <td>
+                            <a href="">
+                                <button>Update</button>
+                            </a>
+                            <a href="">
+                                <button>Delete</button>
+                            </a>
+                        </td>
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </div>
 

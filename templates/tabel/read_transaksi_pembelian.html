@@ -1,7 +1,8 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% block content %}
 
 <div class="form-group col-md-8 mx-auto" style="margin-top: 50px;">
-  <h2>Data Transaksi Pembelian</h2>
+  <h2>Data Transaksi Pembelian {{ nama }}</h2>
 
   <style type="text/css">
     .tg {
@@ -45,224 +46,49 @@
       vertical-align: bottom;
     }
   </style>
-  <table class="tg">
-    <tr>
-      <th class="tg-gahk">ID Transaksi</th>
-      <th class="tg-gahk">Waktu Pembelian</th>
-      <th class="tg-gahk">Total Pembayaran</th>
-      <th class="tg-gahk">ID Konsumen</th>
-      <th class="tg-gahk">Action</th>
-    </tr>
-    <tr>
-      <td class="tg-xwpl">T001</td>
-      <td class="tg-xwpl">2020-04-20 19:03:37</td>
-      <td class="tg-xwpl">25000</td>
-      <td class="tg-xwpl">K01</td>
-      <td class="tg-xwpl">
-        <a href="">
-          <button>Update</button>
-        </a>
-        <a href="">
-          <button>Delete</button>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-xwpl">T002</td>
-      <td class="tg-xwpl">2020-04-20 06:52:16</td>
-      <td class="tg-xwpl">4000</td>
-      <td class="tg-xwpl">K02</td>
-      <td class="tg-xwpl">
-        <a href="">
-          <button>Update</button>
-        </a>
-        <a href="">
-          <button>Delete</button>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-xwpl">T003</td>
-      <td class="tg-xwpl">2020-04-21 03:08:13</td>
-      <td class="tg-xwpl">10000</td>
-      <td class="tg-xwpl">K03</td>
-      <td class="tg-xwpl">
-        <a href="">
-          <button>Update</button>
-        </a>
-        <a href="">
-          <button>Delete</button>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-xwpl">T004</td>
-      <td class="tg-xwpl">2020-04-21 03:03:33</td>
-      <td class="tg-xwpl">8000</td>
-      <td class="tg-xwpl">K04</td>
-      <td class="tg-xwpl">
-        <a href="">
-          <button>Update</button>
-        </a>
-        <a href="">
-          <button>Delete</button>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-xwpl">T005</td>
-      <td class="tg-xwpl">2020-04-21 14:47:55</td>
-      <td class="tg-xwpl">12000</td>
-      <td class="tg-xwpl">K05</td>
-      <td class="tg-xwpl">
-        <a href="">
-          <button>Update</button>
-        </a>
-        <a href="">
-          <button>Delete</button>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-xwpl">T006</td>
-      <td class="tg-xwpl">2020-04-19 10:56:52</td>
-      <td class="tg-xwpl">20000</td>
-      <td class="tg-xwpl">K03</td>
-      <td class="tg-xwpl">
-        <a href="">
-          <button>Update</button>
-        </a>
-        <a href="">
-          <button>Delete</button>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-xwpl">T007</td>
-      <td class="tg-xwpl">2020-04-20 03:32:52</td>
-      <td class="tg-xwpl">80000</td>
-      <td class="tg-xwpl">K04</td>
-      <td class="tg-xwpl">
-        <a href="">
-          <button>Update</button>
-        </a>
-        <a href="">
-          <button>Delete</button>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-xwpl">T008</td>
-      <td class="tg-xwpl">2020-04-20 02:45:15</td>
-      <td class="tg-xwpl">300000</td>
-      <td class="tg-xwpl">K01</td>
-      <td class="tg-xwpl">
-        <a href="">
-          <button>Update</button>
-        </a>
-        <a href="">
-          <button>Delete</button>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-xwpl">T009</td>
-      <td class="tg-xwpl">2020-04-10 21:08:37</td>
-      <td class="tg-xwpl">4000</td>
-      <td class="tg-xwpl">K02</td>
-      <td class="tg-xwpl">
-        <a href="">
-          <button>Update</button>
-        </a>
-        <a href="">
-          <button>Delete</button>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-xwpl">T010</td>
-      <td class="tg-xwpl">2020-04-18 14:31:47</td>
-      <td class="tg-xwpl">6000</td>
-      <td class="tg-xwpl">K05</td>
-      <td class="tg-xwpl">
-        <a href="">
-          <button>Update</button>
-        </a>
-        <a href="">
-          <button>Delete</button>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-xwpl">T011</td>
-      <td class="tg-xwpl">2020-04-20 07:45:22</td>
-      <td class="tg-xwpl">30000</td>
-      <td class="tg-xwpl">K05</td>
-      <td class="tg-xwpl">
-        <a href="">
-          <button>Update</button>
-        </a>
-        <a href="">
-          <button>Delete</button>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-xwpl">T012</td>
-      <td class="tg-xwpl">2020-04-21 09:25:33</td>
-      <td class="tg-xwpl">20000</td>
-      <td class="tg-xwpl">K04</td>
-      <td class="tg-xwpl">
-        <a href="">
-          <button>Update</button>
-        </a>
-        <a href="">
-          <button>Delete</button>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-xwpl">T013</td>
-      <td class="tg-xwpl">2020-04-22 22:10:08</td>
-      <td class="tg-xwpl">250000</td>
-      <td class="tg-xwpl">K03</td>
-      <td class="tg-xwpl">
-        <a href="">
-          <button>Update</button>
-        </a>
-        <a href="">
-          <button>Delete</button>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-xwpl">T014</td>
-      <td class="tg-xwpl">2020-04-20 04:52:16</td>
-      <td class="tg-xwpl">150000</td>
-      <td class="tg-xwpl">K02</td>
-      <td class="tg-xwpl">
-        <a href="">
-          <button>Update</button>
-        </a>
-        <a href="">
-          <button>Delete</button>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-xwpl">T015</td>
-      <td class="tg-xwpl">2020-04-20 01:29:54</td>
-      <td class="tg-xwpl">25000</td>
-      <td class="tg-xwpl">K01</td>
-      <td class="tg-xwpl">
-        <a href="">
-          <button>Update</button>
-        </a>
-        <a href="">
-          <button>Delete</button>
-        </a>
-      </td>
-    </tr>
+  <table class="tg" style="table-layout: fixed; width: 960px">
+    <colgroup>
+      <col style="width: 76px">
+      <col style="width: 209px">
+      <col style="width: 200px">
+      <col style="width: 133px">
+      <col style="width: 174px">
+    </colgroup>
+
+    <thead>
+      <tr>
+        <th class="tg-gahk">ID Transaksi</th>
+        <th class="tg-gahk">Waktu Pembelian</th>
+        <th class="tg-gahk">Total Pembayaran</th>
+        <th class="tg-gahk">ID Konsumen</th>
+        <th class="tg-gahk">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for data in data_transaksi_pembelian %}
+        <tr>
+          <td>{{ data.id_transaksi_pembelian }}</td>
+          <td>{{ data.waktu_pembelian }}</td>
+          <td>{{ data.total_pembayaran }}</td>
+          <td>{{ data.id_konsumen }}</td>
+          {% if role == 'admin-apotek' %}
+            <td>
+                <a href="">
+                    <button>Update</button>
+                </a>
+                <a href="">
+                    <button>Delete</button>
+                </a>
+            </td>
+          {% else %}
+              <td>-</td>
+          {% endif %}
+        </tr>
+      
+      {% endfor %}
+    </tbody>
+    
   </table>
 </div>
 {% endblock content %}

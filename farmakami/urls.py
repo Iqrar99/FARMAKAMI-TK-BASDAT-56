@@ -29,5 +29,6 @@ urlpatterns = [
     path('list-produk-dibeli/', include('list_product_beli.urls')),
     path('pengantaran-farmasi/', include('pengantaran_farmasi.urls')),
     path('transaksi-pembelian/', include('transaksi_pembelian.urls')),
-    path('user-profile/', include('user_profile.urls'))
+    path('user-profile/', include('user_profile.urls')),
+    path('logout/', include('logout.urls'))
 ]
