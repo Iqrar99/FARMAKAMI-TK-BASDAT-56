@@ -75,6 +75,36 @@ def update_apotek(request):
     }
     return render(request, 'update/update_apotek.html', context)
 
+def delete_apotek(request):
+    """
+    function untuk menghapus data apotek.
+    """
+    id_apotek = request.POST['id_apotek']
+
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+
+    cursor.execute(
+        f"""
+        DELETE FROM list_produk_dibeli
+        WHERE id_apotek = '{id_apotek} ';
+
+        DELETE FROM produk_apotek
+        WHERE id_apotek = '{id_apotek}';
+
+        DELETE FROM balai_apotek
+        WHERE id_apotek = '{id_apotek}';
+
+        UPDATE admin_apotek
+        SET id_apotek = NULL
+        WHERE id_apotek = '{id_apotek}';
+
+        DELETE FROM apotek
+        WHERE id_apotek = '{id_apotek}';
+        """
+    )
+
+    return redirect('apotek/tabel/')
 
 def __create_apotek(email, no_sia, nama_penyelenggara, nama_apotek, alamat, telp):
     """
