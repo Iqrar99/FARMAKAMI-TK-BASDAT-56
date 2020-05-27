@@ -4,6 +4,9 @@ from .forms import CreateBalaiPengobatanForm, UpdateBalaiPengobatanForm
 
 # Create your views here.
 def tabel_balai_pengobatan(request):
+    if 'email' not in request.session:
+        return redirect('/login/')
+
     query = """SELECT * FROM balai_pengobatan;"""
 
     cursor = connection.cursor()

@@ -69,6 +69,21 @@ def update_obat(request):
 
     return render(request, 'update/update_obat.html', context)
 
+def delete_obat(request):
+    id_target = request.POST["id_target"]
+    print(id_target)
+
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(
+        f"""
+        DELETE FROM obat
+        WHERE id_obat = '{id_target}';
+        """
+    )
+
+    return redirect('/obat/tabel/')
+
 def __create_obat(id_produk, id_merk, netto, dosis, aturan, kontraindikasi, bentuk_kesediaan):
     """
     function untuk membuat data obat yang baru.
