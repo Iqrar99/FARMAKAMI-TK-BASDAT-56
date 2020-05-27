@@ -67,6 +67,23 @@ def update_pengantaran_farmasi(request):
     }
 	return render(request, 'update/update_pengantaran_farmasi.html', context)
 
+def delete_pengantaran(request):
+    """
+    function untuk menghapus data pengantaran farmasi.
+    """
+    id_pengantaran = request.POST['id_pengantaran']
+
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(
+        f"""
+        DELETE FROM pengantaran_farmasi
+        WHERE id_pengantaran = '{id_pengantaran}';
+        """
+    )
+
+    return redirect('/pengantaran-farmasi/tabel/')
+
 def __create_pengantaran(id_transaksi, waktu, biaya):
     """
     function untuk menambahkan data pengantaran baru.
