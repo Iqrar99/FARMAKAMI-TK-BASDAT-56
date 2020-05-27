@@ -1,28 +1,99 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <div class="form-group col-md-8 mx-auto" style="margin-top: 50px;">
-    <h2>Data Pengantaran Farmasi</h2>
+  <h2>Data Pengantaran Farmasi</h2>
 
-<style type="text/css">
-    .tg  {border-collapse:collapse;border-color:#aabcfe;border-spacing:0;}
-    .tg td{background-color:#e8edff;border-color:#aabcfe;border-style:solid;border-width:1px;color:#669;
-      font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
-    .tg th{background-color:#b9c9fe;border-color:#aabcfe;border-style:solid;border-width:1px;color:#039;
-      font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-    .tg .tg-pjb3{border-color:#330001;color:rgb(0, 0, 0);font-weight:bold;text-align:left;vertical-align:bottom}
-    .tg .tg-7iqy{background-color:rgb(255, 255, 255);border-color:#330001;color:rgb(51, 51, 51);font-weight:bold;text-align:left;
-      vertical-align:top}
-    .tg .tg-9r0n{background-color:rgb(245, 245, 245);border-color:#330001;color:rgb(51, 51, 51);text-align:left;vertical-align:top}
-    .tg .tg-hxpx{background-color:rgb(255, 255, 255);border-color:#330001;color:rgb(51, 51, 51);text-align:left;vertical-align:top}
-    .tg .tg-57sg{border-color:#330001;color:rgb(0, 0, 0);text-align:left;vertical-align:bottom}
-    .tg .tg-c64h{background-color:#D2E4FC;border-color:#330001;color:rgb(0, 0, 0);font-weight:bold;text-align:left;vertical-align:bottom
-      } 
-    .tg .tg-kmgg{background-color:#D2E4FC;border-color:#330001;color:rgb(0, 0, 0);text-align:left;vertical-align:bottom}
-    .tg .tg-ig9k{background-color:rgb(255, 255, 255);border-color:#330001;color:rgb(51, 51, 51);text-align:left;vertical-align:top}
-    </style>
-    <table class="tg">
-      <thead>
+  <style type="text/css">
+    .tg {
+      border-collapse: collapse;
+      border-color: #aabcfe;
+      border-spacing: 0;
+    }
+    .tg td {
+      background-color: #e8edff;
+      border-color: #aabcfe;
+      border-style: solid;
+      border-width: 1px;
+      color: #669;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      overflow: hidden;
+      padding: 10px 5px;
+      word-break: normal;
+    }
+    .tg th {
+      background-color: #b9c9fe;
+      border-color: #aabcfe;
+      border-style: solid;
+      border-width: 1px;
+      color: #039;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: normal;
+      overflow: hidden;
+      padding: 10px 5px;
+      word-break: normal;
+    }
+    .tg .tg-pjb3 {
+      border-color: #330001;
+      color: rgb(0, 0, 0);
+      font-weight: bold;
+      text-align: left;
+      vertical-align: bottom;
+    }
+    .tg .tg-7iqy {
+      background-color: rgb(255, 255, 255);
+      border-color: #330001;
+      color: rgb(51, 51, 51);
+      font-weight: bold;
+      text-align: left;
+      vertical-align: top;
+    }
+    .tg .tg-9r0n {
+      background-color: rgb(245, 245, 245);
+      border-color: #330001;
+      color: rgb(51, 51, 51);
+      text-align: left;
+      vertical-align: top;
+    }
+    .tg .tg-hxpx {
+      background-color: rgb(255, 255, 255);
+      border-color: #330001;
+      color: rgb(51, 51, 51);
+      text-align: left;
+      vertical-align: top;
+    }
+    .tg .tg-57sg {
+      border-color: #330001;
+      color: rgb(0, 0, 0);
+      text-align: left;
+      vertical-align: bottom;
+    }
+    .tg .tg-c64h {
+      background-color: #d2e4fc;
+      border-color: #330001;
+      color: rgb(0, 0, 0);
+      font-weight: bold;
+      text-align: left;
+      vertical-align: bottom;
+    }
+    .tg .tg-kmgg {
+      background-color: #d2e4fc;
+      border-color: #330001;
+      color: rgb(0, 0, 0);
+      text-align: left;
+      vertical-align: bottom;
+    }
+    .tg .tg-ig9k {
+      background-color: rgb(255, 255, 255);
+      border-color: #330001;
+      color: rgb(51, 51, 51);
+      text-align: left;
+      vertical-align: top;
+    }
+  </style>
+  <table class="tg">
+    <thead>
       <tr>
         <th class="tg-pjb3">ID Pengantaran</th>
         <th class="tg-pjb3">ID Kurir</th>
@@ -33,35 +104,59 @@
         <th class="tg-57sg">Total Biaya</th>
         <th class="tg-57sg">Action</th>
       </tr>
-      </thead>
-      
-      <tbody>
-        {% for data in data_pengantaran %}
-          <tr>
-            <td>{{ data.id_pengantaran }}</td>
-            <td>{{ data.id_kurir }}</td>
-            <td>{{ data.id_transaksi_pembelian }}</td>
-            <td>{{ data.waktu }}</td>
-            <td>{{ data.status_pengantaran }}</td>
-            <td>{{ data.biaya_kirim }}</td>
-            <td>{{ data.total_biaya }}</td>
-            {% if role == 'admin-apotek' %}
-                <td>
-                  <a href="">
-                      <button>Update</button>
-                  </a>
-                  <a href="">
-                      <button>Delete</button>
-                  </a>
-                </td>
-            {% else %}
-                <td>-</td>
-            {% endif %}
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    </thead>
 
+    <tbody>
+      {% for data in data_pengantaran %}
+      <tr>
+        <td>{{ data.id_pengantaran }}</td>
+        <td>{{ data.id_kurir }}</td>
+        <td>{{ data.id_transaksi_pembelian }}</td>
+        <td>{{ data.waktu }}</td>
+        <td>{{ data.status_pengantaran }}</td>
+        <td>{{ data.biaya_kirim }}</td>
+        <td>{{ data.total_biaya }}</td>
+        {% if role == 'admin-apotek' %}
+        <td>
+          <a href="">
+            <button>Update</button>
+          </a>
+          <a href="">
+            <button>Delete</button>
+          </a>
+        </td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if role == 'admin-apotek'%}
+  <a href="/navigate/admin-apotek">
+    <button style="margin-top: 20px;" class="btn btn-info" type="submit">
+      Menu Navigasi
+    </button>
+  </a>
+  {% elif role == 'cs' %}
+  <a href="/navigate/cs">
+    <button style="margin-top: 20px;" class="btn btn-info" type="submit">
+      Menu Navigasi
+    </button>
+  </a>
+  {% elif role == 'konsumen' %}
+  <a href="/navigate/konsumen">
+    <button style="margin-top: 20px;" class="btn btn-info" type="submit">
+      Menu Navigasi
+    </button>
+  </a>
+  {% elif role == 'kurir' %}
+  <a href="/navigate/kurir">
+    <button style="margin-top: 20px;" class="btn btn-info" type="submit">
+      Menu Navigasi
+    </button>
+  </a>
+  {%endif%}
 </div>
 
 {% endblock content %}
