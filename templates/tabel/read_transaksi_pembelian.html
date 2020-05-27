@@ -66,7 +66,6 @@
 
     <tbody>
       {% for data in data_transaksi_pembelian %}
-<<<<<<< HEAD
         <tr id="{{ data.id_transaksi_pembelian }}">
           <td>{{ data.id_transaksi_pembelian }}</td>
           <td>{{ data.waktu_pembelian }}</td>
@@ -90,27 +89,6 @@
           {% endif %}
         </tr>
       
-=======
-      <tr>
-        <td>{{ data.id_transaksi_pembelian }}</td>
-        <td>{{ data.waktu_pembelian }}</td>
-        <td>{{ data.total_pembayaran }}</td>
-        <td>{{ data.id_konsumen }}</td>
-        {% if role == 'admin-apotek' %}
-        <td>
-          <a href="">
-            <button>Update</button>
-          </a>
-          <a href="">
-            <button>Delete</button>
-          </a>
-        </td>
-        {% else %}
-        <td>-</td>
-        {% endif %}
-      </tr>
-
->>>>>>> master
       {% endfor %}
     </tbody>
   </table>
