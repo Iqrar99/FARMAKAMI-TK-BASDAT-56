@@ -1,103 +1,127 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <div class="container" style="margin-top: 50px;">
-    <h2>Data Balai Pengobatan</h2>
+  <h2>Data Balai Pengobatan</h2>
 
-    <style type="text/css">
-        .tg {
-            border-collapse: collapse;
-            border-color: #9ABAD9;
-            border-spacing: 0;
-        }
-    
-        .tg td {
-            background-color: #EBF5FF;
-            border-color: #9ABAD9;
-            border-style: solid;
-            border-width: 1px;
-            color: #444;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            overflow: hidden;
-            padding: 10px 5px;
-            word-break: normal;
-        }
-    
-        .tg th {
-            background-color: #409cff;
-            border-color: #9ABAD9;
-            border-style: solid;
-            border-width: 1px;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: normal;
-            overflow: hidden;
-            padding: 10px 5px;
-            word-break: normal;
-        }
-    
-        .tg .tg-baqh {
-            text-align: center;
-            vertical-align: top
-        }
-    
-        .tg .tg-c3ow {
-            border-color: inherit;
-            text-align: center;
-            vertical-align: top
-        }
-    
-        .tg .tg-0lax {
-            text-align: left;
-            vertical-align: top
-        }
-    </style>
-    <table class="tg" style="table-layout: fixed; width: 960px">
-        <colgroup>
-            <col style="width: 76px">
-            <col style="width: 209px">
-            <col style="width: 278px">
-            <col style="width: 133px">
-            <col style="width: 174px">
-            <col style="width: 90px">
-        </colgroup>
-        <thead>
-            <tr>
-                <th class="tg-c3ow">ID Balai</th>
-                <th class="tg-baqh">Alamat Balai</th>
-                <th class="tg-baqh">Nama Balai</th>
-                <th class="tg-baqh">Jenis Balai</th>
-                <th class="tg-baqh">Telepon Balai</th>
-                <th class="tg-baqh">Action</th>
-            </tr>
-        </thead>
+  <style type="text/css">
+    .tg {
+      border-collapse: collapse;
+      border-color: #9abad9;
+      border-spacing: 0;
+    }
 
-        <tbody>
-            {% for balai in data_balai %}
-                <tr>
-                    <td>{{ balai.id_balai }}</td>
-                    <td>{{ balai.alamat_balai }}</td>
-                    <td>{{ balai.nama_balai }}</td>
-                    <td>{{ balai.jenis_balai }}</td>
-                    <td>{{ balai.telepon_balai }}</td>
-                    {% if role == 'admin-apotek' %}
-                        <td>
-                            <a href="">
-                                <button>Update</button>
-                            </a>
-                            <a href="">
-                                <button>Delete</button>
-                            </a>
-                        </td>
-                    {% else %}
-                        <td>-</td>
-                    {% endif %}
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    .tg td {
+      background-color: #ebf5ff;
+      border-color: #9abad9;
+      border-style: solid;
+      border-width: 1px;
+      color: #444;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      overflow: hidden;
+      padding: 10px 5px;
+      word-break: normal;
+    }
+
+    .tg th {
+      background-color: #409cff;
+      border-color: #9abad9;
+      border-style: solid;
+      border-width: 1px;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: normal;
+      overflow: hidden;
+      padding: 10px 5px;
+      word-break: normal;
+    }
+
+    .tg .tg-baqh {
+      text-align: center;
+      vertical-align: top;
+    }
+
+    .tg .tg-c3ow {
+      border-color: inherit;
+      text-align: center;
+      vertical-align: top;
+    }
+
+    .tg .tg-0lax {
+      text-align: left;
+      vertical-align: top;
+    }
+  </style>
+  <table class="tg" style="table-layout: fixed; width: 960px;">
+    <colgroup>
+      <col style="width: 76px;" />
+      <col style="width: 209px;" />
+      <col style="width: 278px;" />
+      <col style="width: 133px;" />
+      <col style="width: 174px;" />
+      <col style="width: 90px;" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th class="tg-c3ow">ID Balai</th>
+        <th class="tg-baqh">Alamat Balai</th>
+        <th class="tg-baqh">Nama Balai</th>
+        <th class="tg-baqh">Jenis Balai</th>
+        <th class="tg-baqh">Telepon Balai</th>
+        <th class="tg-baqh">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for balai in data_balai %}
+      <tr>
+        <td>{{ balai.id_balai }}</td>
+        <td>{{ balai.alamat_balai }}</td>
+        <td>{{ balai.nama_balai }}</td>
+        <td>{{ balai.jenis_balai }}</td>
+        <td>{{ balai.telepon_balai }}</td>
+        {% if role == 'admin-apotek' %}
+        <td>
+          <a href="">
+            <button>Update</button>
+          </a>
+          <a href="">
+            <button>Delete</button>
+          </a>
+        </td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if role == 'admin-apotek'%}
+  <a href="/navigate/admin-apotek">
+    <button style="margin-top: 20px;" class="btn btn-info" type="submit">
+      Menu Navigasi
+    </button>
+  </a>
+  {% elif role == 'cs' %}
+  <a href="/navigate/cs">
+    <button style="margin-top: 20px;" class="btn btn-info" type="submit">
+      Menu Navigasi
+    </button>
+  </a>
+  {% elif role == 'konsumen' %}
+  <a href="/navigate/konsumen">
+    <button style="margin-top: 20px;" class="btn btn-info" type="submit">
+      Menu Navigasi
+    </button>
+  </a>
+  {% elif role == 'kurir' %}
+  <a href="/navigate/kurir">
+    <button style="margin-top: 20px;" class="btn btn-info" type="submit">
+      Menu Navigasi
+    </button>
+  </a>
+  {%endif%}
 </div>
 
 {% endblock content %}

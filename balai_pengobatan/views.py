@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.db import connection
-from .forms import CreateBalaiPengobatanForm, UpdateBalaiPengobatanForm 
+from .forms import CreateBalaiPengobatanForm, UpdateBalaiPengobatanForm
 
 # Create your views here.
+
+
 def tabel_balai_pengobatan(request):
     if 'email' not in request.session:
         return redirect('/login/')
@@ -14,13 +16,14 @@ def tabel_balai_pengobatan(request):
     cursor.execute(query)
 
     data_balai = __fetch(cursor)
-    
+
     context = {
-        'data_balai' : data_balai,
-        'role' : request.session['role']
+        'data_balai': data_balai,
+        'role': request.session['role']
     }
 
     return render(request, 'tabel/read_balai_pengobatan.html', context)
+
 
 def buat_balai_pengobatan(request):
     if 'email' not in request.session:
@@ -31,8 +34,8 @@ def buat_balai_pengobatan(request):
 
     form = CreateBalaiPengobatanForm(request.POST or None)
     context = {
-        'form' : form,
-        'error' : []
+        'form': form,
+        'error': []
     }
 
     if (request.method == 'POST' and form.is_valid()):
@@ -55,7 +58,7 @@ def buat_balai_pengobatan(request):
             context['error'].append(
                 'The phone number should contains number only.')
             valid = valid and False
-        
+
         if valid:
             try:
                 __create(alamat, nama_balai, jenis, telp, id_apotek)
@@ -64,17 +67,19 @@ def buat_balai_pengobatan(request):
                 return redirect('/balai-pengobatan/tabel/')
             except:
                 print('GAGAL MEMBUAT')
-        
+
     return render(request, 'create/create_balai_pengobatan.html', context)
+
 
 def update_balai_pengobatan(request):
     context = {
-        'form' : UpdateBalaiPengobatanForm(request.POST or None)
+        'form': UpdateBalaiPengobatanForm(request.POST or None)
     }
 
     return render(request, 'update/update_balai_pengobatan.html', context)
 
-def __check_alamat(alamat:str):
+
+def __check_alamat(alamat: str):
     """
     function untuk memvalidasi apakah alamat pernah terdaftar atau belum.
     """
@@ -96,6 +101,7 @@ def __check_alamat(alamat:str):
     print("ALAMAT SUDAH TERDAFTAR")
     return True
 
+
 def __create(alamat, nama_balai, jenis, telp, id_apotek):
     """
     function untuk memasukkan input ke dalam tabel BALAI_PENGOBATAN
@@ -103,10 +109,10 @@ def __create(alamat, nama_balai, jenis, telp, id_apotek):
     """
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO farmakami;")
-    
+
     # generate id balai
     cursor.execute(
-    """
+        """
     SELECT id_balai FROM balai_pengobatan
     ORDER BY id_balai DESC
     LIMIT 1;
@@ -137,5 +143,5 @@ def __create(alamat, nama_balai, jenis, telp, id_apotek):
 
 
 def __fetch(cursor):
-	columns = [col[0] for col in cursor.description]
-	return [dict(zip(columns, row)) for row in cursor.fetchall()]
+    columns = [col[0] for col in cursor.description]
+    return [dict(zip(columns, row)) for row in cursor.fetchall()]

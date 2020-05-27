@@ -1,68 +1,127 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <div class="form-group col-md-8 mx-auto" style="margin-top: 50px;">
-<h2>Data List Produk Dibeli</h2>
+  <h2>Data List Produk Dibeli</h2>
 
-<style type="text/css">
-    .tg  {
-        border-collapse:collapse;border-color:#aabcfe;border-spacing:0;
-        }
-    .tg td{
-        background-color:#e8edff;border-color:#aabcfe;border-style:solid;border-width:1px;color:#669;
-      font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;
-      }
-    .tg th{
-        background-color:#b9c9fe;border-color:#aabcfe;border-style:solid;border-width:1px;color:#039;
-      font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;
-      }
-    .tg .tg-u0vj{
-        background-color:#D2E4FC;border-color:#000000;color:rgb(0, 0, 0);text-align:left;vertical-align:bottom
-        }
-    .tg .tg-46n2{
-        border-color:#000000;color:rgb(0, 0, 0);font-weight:bold;text-align:left;vertical-align:bottom
-        }
-    .tg .tg-xisi{
-        background-color:#D2E4FC;border-color:#000000;color:rgb(0, 0, 0);font-weight:bold;text-align:left;vertical-align:bottom
-      }
-    .tg .tg-qkgh{
-        border-color:#000000;color:rgb(0, 0, 0);text-align:left;vertical-align:bottom
-        }
-    </style>
-    <table class="tg" style="table-layout: fixed; width: 960px">
-        <thead>
-            <tr>
-                <th class="tg-46n2">ID Apotek</th>
-                <th class="tg-46n2">ID Produk</th>
-                <th class="tg-46n2">ID Transaksi Pembelian</th>
-                <th class="tg-46n2">Jumlah</th>
-                <th class="tg-46n2">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for data in data_list_produk %}
-                <tr>
-                    <td>{{ data.id_apotek }}</td>
-                    <td>{{ data.id_produk }}</td>
-                    <td>{{ data.id_transaksi_pembelian }}</td>
-                    <td>{{ data.jumlah }}</td>
-                    {% if role == 'admin-apotek' %}
-                        <td>
-                            <a href="">
-                                <button>Update</button>
-                            </a>
-                            <a href="">
-                                <button>Delete</button>
-                            </a>
-                        </td>
-                    {% else %}
-                        <td>-</td>
-                    {% endif %}
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+  <style type="text/css">
+    .tg {
+      border-collapse: collapse;
+      border-color: #aabcfe;
+      border-spacing: 0;
+    }
+    .tg td {
+      background-color: #e8edff;
+      border-color: #aabcfe;
+      border-style: solid;
+      border-width: 1px;
+      color: #669;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      overflow: hidden;
+      padding: 10px 5px;
+      word-break: normal;
+    }
+    .tg th {
+      background-color: #b9c9fe;
+      border-color: #aabcfe;
+      border-style: solid;
+      border-width: 1px;
+      color: #039;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: normal;
+      overflow: hidden;
+      padding: 10px 5px;
+      word-break: normal;
+    }
+    .tg .tg-u0vj {
+      background-color: #d2e4fc;
+      border-color: #000000;
+      color: rgb(0, 0, 0);
+      text-align: left;
+      vertical-align: bottom;
+    }
+    .tg .tg-46n2 {
+      border-color: #000000;
+      color: rgb(0, 0, 0);
+      font-weight: bold;
+      text-align: left;
+      vertical-align: bottom;
+    }
+    .tg .tg-xisi {
+      background-color: #d2e4fc;
+      border-color: #000000;
+      color: rgb(0, 0, 0);
+      font-weight: bold;
+      text-align: left;
+      vertical-align: bottom;
+    }
+    .tg .tg-qkgh {
+      border-color: #000000;
+      color: rgb(0, 0, 0);
+      text-align: left;
+      vertical-align: bottom;
+    }
+  </style>
+  <table class="tg" style="table-layout: fixed; width: 960px;">
+    <thead>
+      <tr>
+        <th class="tg-46n2">ID Apotek</th>
+        <th class="tg-46n2">ID Produk</th>
+        <th class="tg-46n2">ID Transaksi Pembelian</th>
+        <th class="tg-46n2">Jumlah</th>
+        <th class="tg-46n2">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in data_list_produk %}
+      <tr>
+        <td>{{ data.id_apotek }}</td>
+        <td>{{ data.id_produk }}</td>
+        <td>{{ data.id_transaksi_pembelian }}</td>
+        <td>{{ data.jumlah }}</td>
+        {% if role == 'admin-apotek' %}
+        <td>
+          <a href="">
+            <button>Update</button>
+          </a>
+          <a href="">
+            <button>Delete</button>
+          </a>
+        </td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
+  {% if role == 'admin-apotek'%}
+  <a href="/navigate/admin-apotek">
+    <button style="margin-top: 20px;" class="btn btn-info" type="submit">
+      Menu Navigasi
+    </button>
+  </a>
+  {% elif role == 'cs' %}
+  <a href="/navigate/cs">
+    <button style="margin-top: 20px;" class="btn btn-info" type="submit">
+      Menu Navigasi
+    </button>
+  </a>
+  {% elif role == 'konsumen' %}
+  <a href="/navigate/konsumen">
+    <button style="margin-top: 20px;" class="btn btn-info" type="submit">
+      Menu Navigasi
+    </button>
+  </a>
+  {% elif role == 'kurir' %}
+  <a href="/navigate/kurir">
+    <button style="margin-top: 20px;" class="btn btn-info" type="submit">
+      Menu Navigasi
+    </button>
+  </a>
+  {%endif%}
 </div>
 
 {% endblock content %}
