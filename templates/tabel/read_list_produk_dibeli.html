@@ -41,7 +41,7 @@
         </thead>
         <tbody>
             {% for data in data_list_produk %}
-                <tr>
+                <tr id="{{ data.id_apotek }}_{{ data.id_produk }}_{{ data.id_transaksi_pembelian }}">
                     <td>{{ data.id_apotek }}</td>
                     <td>{{ data.id_produk }}</td>
                     <td>{{ data.id_transaksi_pembelian }}</td>
@@ -51,9 +51,13 @@
                             <a href="">
                                 <button>Update</button>
                             </a>
-                            <a href="">
-                                <button>Delete</button>
-                            </a>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <button type="submit"
+                                onclick="deleteRowProdukDibeli('{{ data.id_apotek }}', '{{ data.id_produk }}', '{{ data.id_transaksi_pembelian }}', '{{ csrf_token }}')">
+                                    Delete
+                                </button>
+                            </form>
                         </td>
                     {% else %}
                         <td>-</td>

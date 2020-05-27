@@ -36,7 +36,7 @@ function deleteRowProdukApotek(id_produk, id_apotek, token) {
             id_apotek : id_apotek
         },
         success: function () {
-            console.log("Data sukses di kirim ke Django");
+            console.log("Data sukses dikirim ke Django");
         },
     });
 }
@@ -55,7 +55,34 @@ function deleteRowTransaksi(id_transaksi, token) {
         url: "/transaksi-pembelian/tabel/delete/",
         data: { id_transaksi: id_transaksi },
         success: function () {
-            console.log("Data sukses di kirim ke Django");
+            console.log("Data sukses dikirim ke Django");
+        },
+    });
+}
+
+/**
+ * function untuk menghapus baris pada data produk apotek.
+ * @param id_apotek Primary Key
+ * @param id_produk Primary Key
+ * @param id_transaksi Primary key
+ * @param token CSRF token
+ */
+function deleteRowProdukDibeli(id_apotek, id_produk, id_transaksi, token) {
+    console.log(id_apotek)
+    console.log(id_produk)
+    console.log(id_transaksi)
+
+    $.ajax({
+        headers: { "X-CSRFToken": token },
+        type: "POST",
+        url: "/produk-apotek/tabel/delete/",
+        data: {
+            id_apotek: id_apotek,
+            id_produk: id_produk,
+            id_transaksi: id_transaksi,
+        },
+        success: function () {
+            console.log("Data sukses dikirim ke Django");
         },
     });
 }

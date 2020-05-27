@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.db import connection
 from .forms import ListProdukForm, UpdateList
 
-# Create your views here.
 def tabel_list_produk_dibeli(request):
+    """
+    function untuk menampilkan data produk yang dibeli.
+    """
     if 'email' not in request.session:
         return redirect('/login/')
 
@@ -23,6 +25,9 @@ def tabel_list_produk_dibeli(request):
     return render(request, 'tabel/read_list_produk_dibeli.html', context)
 
 def create_list_produk_dibeli(request):
+    """
+    function untuk membuat data produk yang dibeli.
+    """
     if 'email' not in request.session:
         return redirect('/login/')
 
@@ -65,6 +70,30 @@ def update_list_produk_dibeli(request):
         'form' : UpdateList(request.POST or None)
     }
 	return render(request, 'update/update_list_product_dibeli.html', context)
+
+def delete_produk_dibeli(request):
+    """
+    function untuk menghapus data produk yang dibeli.
+    """
+    id_apotek = request.POST["id_apotek"]
+    id_produk = request.POST["id_produk"]
+    id_transaksi = request.POST["id_transaksi"]
+
+    print(request.POST)
+
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+
+    cursor.execute(
+        f"""
+        DELETE FROM list_produk_dibeli
+        WHERE id_apotek = '{id_apotek}'
+        AND id_produk = '{id_produk}'
+        AND id_transaksi_pembelian = '{id_transaksi}';
+        """
+    )
+
+    return redirect('/list-produk-dibeli/tabel/')
 
 def __create_produk_dibeli(jumlah, id_apotek, id_produk, id_transaksi):
     """

@@ -92,6 +92,10 @@ def delete_produk_apotek(request):
 	cursor.execute("SET SEARCH_PATH TO farmakami;")
 	cursor.execute(
         f"""
+		DELETE FROM list_produk_dibeli
+		WHERE id_apotek = '{id_apotek}'
+		AND id_produk = '{id_produk}';
+
 		DELETE FROM produk_apotek
 		WHERE id_produk = '{id_produk}'
 		AND id_apotek = '{id_apotek}';
