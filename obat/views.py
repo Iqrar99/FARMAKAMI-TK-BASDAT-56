@@ -70,8 +70,10 @@ def update_obat(request):
     return render(request, 'update/update_obat.html', context)
 
 def delete_obat(request):
+    """
+    function untuk menghapus data obat pada baris yang diminta.
+    """
     id_target = request.POST["id_target"]
-    print(id_target)
 
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO farmakami;")

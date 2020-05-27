@@ -1,23 +1,46 @@
 /**
- * function untuk menghapus baris pada data.
- * @param pk : Primary Key
+ * function untuk menghapus baris pada data obat.
+ * @param id_obat Primary Key
+ * @param token CSRF token
  */
-function deleteRowObat(pk, token) {
-    console.log(pk)
+function deleteRowObat(id_obat, token) {
+    console.log(id_obat)
 
     $.ajax({
         headers: { "X-CSRFToken": token },
         type: "POST",
         url: "/obat/tabel/delete/",
-        data: {id_target : pk},
+        data: {id_target : id_obat},
         success: function () {
             console.log("Data sukses di kirim ke Django");
         },
-        complete: function () {
-            alert("Data Sukses Dihapus!");
-        }
     });
-};
+}
+
+/**
+ * function untuk menghapus baris pada data produk apotek.
+ * @param id_produk Primary Key
+ * @param id_apotek Primary key
+ * @param token CSRF token
+ */
+function deleteRowProdukApotek(id_produk, id_apotek, token) {
+    console.log(id_produk)
+    console.log(id_apotek)
+
+    $.ajax({
+        headers: { "X-CSRFToken": token },
+        type: "POST",
+        url: "/produk-apotek/tabel/delete/",
+        data: {
+            id_produk : id_produk,
+            id_apotek : id_apotek
+        },
+        success: function () {
+            console.log("Data sukses di kirim ke Django");
+        },
+    });
+}
+
 
 
 
