@@ -41,6 +41,25 @@ function deleteRowProdukApotek(id_produk, id_apotek, token) {
     });
 }
 
+/**
+ * function untuk menghapus baris pada data transaksi pembelian.
+ * @param id_transaksi Primary Key
+ * @param token CSRF token
+ */
+function deleteRowTransaksi(id_transaksi, token) {
+    console.log(id_transaksi)
+
+    $.ajax({
+        headers: { "X-CSRFToken": token },
+        type: "POST",
+        url: "/transaksi-pembelian/tabel/delete/",
+        data: { id_transaksi: id_transaksi },
+        success: function () {
+            console.log("Data sukses di kirim ke Django");
+        },
+    });
+}
+
 
 
 

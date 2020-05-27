@@ -4,6 +4,9 @@ from datetime import datetime
 from .forms import TransaksiPembelianForm, UpdateTransaksiPembelian
 
 def tabel_transaksi_pembelian(request):
+    """
+    function untuk menampilkan data transaksi pembelian.
+    """
     if 'email' not in request.session:
         return redirect('/login/')
 
@@ -36,6 +39,10 @@ def tabel_transaksi_pembelian(request):
     return render(request, 'tabel/read_transaksi_pembelian.html', context)
 
 def buat_transaksi_pembelian(request):
+    """
+    function untuk membuat data transaksi pembelian.
+    """
+
     if 'email' not in request.session:
         return redirect('/login/')
 
@@ -48,16 +55,17 @@ def buat_transaksi_pembelian(request):
         'error': []
     }
 
-    id_konsumen = request.POST['id_konsumen']
+    if (request.method == "POST" or form.is_valid()):
+        id_konsumen = request.POST['id_konsumen']
 
-    try:
-        __create_transaksi_beli(id_konsumen)
-        print("TRANSAKSI PEMBELIAN SUKSES DITAMBAHKAN")
-        
-        return redirect('/transaksi-pembelian/tabel/')
+        try:
+            __create_transaksi_beli(id_konsumen)
+            print("TRANSAKSI PEMBELIAN SUKSES DITAMBAHKAN")
+            
+            return redirect('/transaksi-pembelian/tabel/')
 
-    except:
-        print("TRANSAKSI PEMBELIAN GAGAL DITAMBAHKAN")
+        except:
+            print("TRANSAKSI PEMBELIAN GAGAL DITAMBAHKAN")
 
     return render(request, 'create/create_transaksi_pembelian.html', context)
 
@@ -66,6 +74,23 @@ def update_transaksi_pembelian(request):
         'form': UpdateTransaksiPembelian(request.POST or None)
     }
     return render(request, 'update/update_transaksi_pembelian.html', context)
+
+def delete_transaksi_pembelian(request):
+    """
+    function untuk menghapus data transaksi pembelian sesuai yang dimninta.
+    """
+    id_transaksi = request.POST['id_transaksi']
+
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(
+        f"""
+        DELETE FROM transaksi_pembelian
+        WHERE id_transaksi_pembelian = '{id_transaksi}';
+        """
+    )
+
+    return redirect('/transaksi-pembelian/tabel/')
 
 def get_id_konsumen(request):
     """

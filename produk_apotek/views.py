@@ -83,7 +83,7 @@ def update_produk_apotek(request):
 
 def delete_produk_apotek(request):
 	"""
-    function untuk menghapus data produk apotek pada baris yang diminta.
+	function untuk menghapus data produk apotek pada baris yang diminta.
 	"""
 	id_produk = request.POST["id_produk"]
 	id_apotek = request.POST["id_apotek"]
@@ -92,10 +92,10 @@ def delete_produk_apotek(request):
 	cursor.execute("SET SEARCH_PATH TO farmakami;")
 	cursor.execute(
         f"""
-        DELETE FROM produk_apotek
-        WHERE id_produk = '{id_produk}'
+		DELETE FROM produk_apotek
+		WHERE id_produk = '{id_produk}'
 		AND id_apotek = '{id_apotek}';
-        """
+		"""
     )
 
 	return redirect('/produk-apotek/tabel/')
