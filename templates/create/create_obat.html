@@ -8,13 +8,19 @@
   </form>
   {% for e in error %}
   <p style="color: red;">{{ e }}</p>
-  {% endfor %}
-
+  {% endfor %} {% if role == 'admin-apotek'%}
+  <a href="/navigate/admin-apotek">
+    <button style="margin-top: 20px;" class="btn btn-info" type="submit">
+      Menu Navigasi
+    </button>
+  </a>
+  {% elif role == 'cs' %}
   <a href="/navigate/cs">
     <button style="margin-top: 20px;" class="btn btn-info" type="submit">
       Menu Navigasi
     </button>
   </a>
+  {% endif %}
 </div>
 
 {% endblock content %}

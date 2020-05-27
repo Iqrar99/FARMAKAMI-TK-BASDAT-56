@@ -27,13 +27,16 @@ def buat_obat(request):
     if 'email' not in request.session:
         return redirect('/login/')
 
-    if request.session['role'] != 'cs':
+    if (request.session['role'] == 'kurir'):
+        return redirect(f'/navigate/{request.session["role"]}/')
+    elif (request.session['role'] == 'konsumen'):
         return redirect(f'/navigate/{request.session["role"]}/')
 
     form = CreateObatForm(request.POST or None)
     context = {
         'form': form,
-        'error': []
+        'error': [],
+        'role': request.session['role'],
     }
 
     if (request.method == 'POST' and form.is_valid()):
