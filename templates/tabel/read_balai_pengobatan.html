@@ -83,9 +83,12 @@
         <td>{{ balai.telepon_balai }}</td>
         {% if role == 'admin-apotek' %}
         <td>
-          <a href="">
-            <button>Update</button>
+          <a href="/balai-pengobatan/update/{{ balai.id_balai }}">
+              <button>
+                Update
+              </button>
           </a>
+          
           <form method="POST">
               {% csrf_token %}
               <button type="submit"

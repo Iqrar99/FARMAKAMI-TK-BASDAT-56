@@ -67,10 +67,70 @@ def buat_balai_pengobatan(request):
 
     return render(request, 'create/create_balai_pengobatan.html', context)
 
-def update_balai_pengobatan(request):
+def update_balai_pengobatan(request, id):
+    if 'email' not in request.session:
+        return redirect('/login/')
+
+    if (request.session['role'] != 'admin-apotek'):
+        return redirect(f'/navigate/{request.session["role"]}/')
+
+    # Panggil data target untuk dijadikan initial di formnya
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(f"SELECT * FROM balai_pengobatan")
+
+    data_balai = {}
+    x = __fetch(cursor)
+    for i in range(len(x)):
+        if x[i]['id_balai'] == id:
+            data_balai = x[i]
+            break
+
+    data_alamat_balai = data_balai['alamat_balai']
+    data_nama_balai = data_balai['nama_balai']
+    data_jenis_balai = data_balai['jenis_balai']
+    data_telepon_balai = data_balai['telepon_balai']
+    data_id_apotek = __get_apotek_berasosiasi(id)
+
+    form = UpdateBalaiPengobatanForm(request.POST or None, initial = {
+        'id_balai' : id,
+        'alamat_balai': data_alamat_balai,
+        'nama_balai' : data_nama_balai,
+        'jenis_balai' : data_jenis_balai,
+        'telepon_balai': data_telepon_balai,
+        'id_apotek' : data_id_apotek
+    })
+
     context = {
-        'form': UpdateBalaiPengobatanForm(request.POST or None)
+        'error': [],
+        'form': form,
     }
+
+    if (request.method == 'POST' and form.is_valid()):
+        valid = True
+
+        id_balai = id
+        alamat_balai = request.POST['alamat_balai']
+        nama_balai = request.POST['nama_balai']
+        jenis_balai = request.POST['jenis_balai']
+        telepon_balai = request.POST['telepon_balai']
+        id_apotek = request.POST['id_apotek']
+
+        # validasi nomor telepon
+        if (telepon_balai != '' and (not telepon_balai.isnumeric())):
+            context['error'].append(
+                'The phone number should contains number only.')
+            valid = valid and False
+
+        if valid:
+            try:
+                __update(id_balai, alamat_balai, nama_balai, jenis_balai, telepon_balai, id_apotek)
+                print("UPDATE SUKSES")
+
+                return redirect('/balai-pengobatan/tabel/')
+
+            except:
+                print("UPDATE GAGAL")
 
     return render(request, 'update/update_balai_pengobatan.html', context)
 
@@ -93,6 +153,26 @@ def delete_balai(request):
     )
 
     return redirect('/balai-pengobatan/tabel/')
+
+def __update(id_balai, alamat, nama, jenis, telp, id_apotek):
+    """
+    function untuk memperbarui data balai pengobatan.
+    """
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(
+        f"""
+        UPDATE balai_apotek
+        SET id_apotek = '{id_apotek}'
+        WHERE id_balai = '{id_balai}';
+
+        UPDATE balai_pengobatan
+        SET (alamat_balai, nama_balai, jenis_balai, telepon_balai) = 
+        ('{alamat}', '{nama}', '{jenis}', '{telp}')
+        WHERE id_balai = '{id_balai}';
+        """
+    )
+
 
 def __check_alamat(alamat: str):
     """
@@ -154,6 +234,24 @@ def __create(alamat, nama_balai, jenis, telp, id_apotek):
     VALUES ('{new_id}', '{id_apotek}');
     """
     cursor.execute(query)
+
+def __get_apotek_berasosiasi(id_balai):
+    """
+    function untuk mendapatkan id apotek yang berasosiasi dengan
+    balai yang bersangkutan.
+    """
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(
+        f"""
+        SELECT id_apotek FROM balai_apotek
+        WHERE id_balai = '{id_balai}'; 
+        """
+    )
+
+    return __fetch(cursor)[0]['id_apotek']
+
+
 
 def __fetch(cursor):
     columns = [col[0] for col in cursor.description]

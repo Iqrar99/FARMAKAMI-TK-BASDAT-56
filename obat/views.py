@@ -127,7 +127,7 @@ def update_obat(request, id):
         kontraindikasi = "NULL" if kontraindikasi == '' else "'"+kontraindikasi+"'"
 
         try:
-            __update_obat(id_obat, id_produk, id_merk, netto, dosis, aturan, kontraindikasi, kesediaan)
+            __update(id_obat, id_produk, id_merk, netto, dosis, aturan, kontraindikasi, kesediaan)
             print("SUKSES UPDATE")
 
             return redirect("/obat/tabel/")
@@ -215,7 +215,7 @@ def __create_id_produk() -> str:
     return new_id
 
 
-def __update_obat(id_obat, id_produk, id_merk, netto, dosis, aturan, kontraindikasi, bentuk_kesediaan):
+def __update(id_obat, id_produk, id_merk, netto, dosis, aturan, kontraindikasi, bentuk_kesediaan):
     """
     function untuk memperbarui data obat.
     """
