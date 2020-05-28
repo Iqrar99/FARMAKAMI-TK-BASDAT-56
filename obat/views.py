@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.db import connection
 from .forms import CreateObatForm, UpdateObatForm
 
-
 def tabel_obat(request):
     if 'email' not in request.session:
         return redirect('/login/')
@@ -19,7 +18,7 @@ def tabel_obat(request):
         'data_obat': data_obat,
         'role': request.session['role']
     }
-
+    
     return render(request, 'tabel/read_obat.html', context)
 
 
@@ -68,10 +67,73 @@ def buat_obat(request):
     return render(request, 'create/create_obat.html', context)
 
 
-def update_obat(request):
+def update_obat(request, id):
+    if 'email' not in request.session:
+        return redirect('/login/')
+
+    if (request.session['role'] == 'kurir'):
+        return redirect(f'/navigate/{request.session["role"]}/')
+    elif (request.session['role'] == 'konsumen'):
+        return redirect(f'/navigate/{request.session["role"]}/')
+
+    # Panggil data target untuk dijadikan initial di formnya
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(f"SELECT * FROM obat WHERE id_obat = '{id}';")
+
+    data_obat = __fetch(cursor)[0]
+
+    data_id_obat = data_obat['id_obat']
+    data_id_merk = data_obat['id_merk_obat']
+    data_id_produk = data_obat['id_produk']
+    data_netto = data_obat['netto']
+    data_dosis = data_obat['dosis']
+    data_aturan = data_obat['aturan_pakai']
+    data_kontraindikasi = data_obat['kontraindikasi']
+    data_kesediaan = data_obat['bentuk_kesediaan']
+
+    form = UpdateObatForm(request.POST or None, initial={
+        'id_obat' : data_id_obat,
+        'id_produk' : data_id_produk,
+        'id_merk_obat' : data_id_merk,
+        'netto_obat' : data_netto,
+        'dosis_obat' : data_dosis,
+        'aturan_pakai' : data_aturan,
+        'kontraindikasi' : data_kontraindikasi,
+        'bentuk_kesediaan' : data_kesediaan,
+    })
+
     context = {
-        'form': UpdateObatForm(request.POST or None)
+        'error': [],
+        'form' : form,
     }
+
+    if (request.method == 'POST' and form.is_valid()):
+        print(request.POST)
+
+        # hacking the data since it cannot pass the POST request
+        # from disabled input
+        id_obat = data_id_obat
+        id_produk = data_id_produk
+
+        id_merk = request.POST['id_merk_obat']
+        netto = request.POST['netto_obat']
+        dosis = request.POST['dosis_obat']
+        aturan = request.POST['aturan_pakai']
+        kontraindikasi = request.POST['kontraindikasi']
+        kesediaan = request.POST['bentuk_kesediaan']
+
+        aturan = "NULL" if aturan == '' else "'"+aturan+"'"
+        kontraindikasi = "NULL" if kontraindikasi == '' else "'"+kontraindikasi+"'"
+
+        try:
+            __update_obat(id_obat, id_produk, id_merk, netto, dosis, aturan, kontraindikasi, kesediaan)
+            print("SUKSES UPDATE")
+
+            return redirect("/obat/tabel/")
+
+        except:
+            print("GAGAL UPDATE")
 
     return render(request, 'update/update_obat.html', context)
 
@@ -124,7 +186,6 @@ def __create_obat(id_produk, id_merk, netto, dosis, aturan, kontraindikasi, bent
         """
     )
 
-
 def __create_id_produk() -> str:
     """
     function untuk membuat id produk yang baru.
@@ -153,6 +214,22 @@ def __create_id_produk() -> str:
     print('PRODUK BARU BERHASIL DIINPUT')
     return new_id
 
+
+def __update_obat(id_obat, id_produk, id_merk, netto, dosis, aturan, kontraindikasi, bentuk_kesediaan):
+    """
+    function untuk memperbarui data obat.
+    """
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+
+    cursor.execute(
+        f"""
+        UPDATE obat
+        SET (id_merk_obat, netto, dosis, aturan_pakai, kontraindikasi, bentuk_kesediaan) =
+        ('{id_merk}', '{netto}', '{dosis}', {aturan}, {kontraindikasi}, '{bentuk_kesediaan}')
+        WHERE id_obat = '{id_obat}' AND id_produk = '{id_produk}';
+        """
+    )
 
 def __fetch(cursor):
     columns = [col[0] for col in cursor.description]

@@ -1,8 +1,12 @@
 from django import forms
 from django.db import connection
 
-class CreateObatForm(forms.Form):
-    def get_id_merk():
+class Get(object):
+
+    def __init__(self):
+        super().__init__()
+
+    def get_id_merk(self):
         """
         function untuk mendapatkan id merk obat yang tersedia pada tabel MERK OBAT.
         """
@@ -20,19 +24,20 @@ class CreateObatForm(forms.Form):
 
         return tuple(packed_data)
 
+class CreateObatForm(forms.Form):
+    g = Get()
+
     id_merk_obat = forms.ChoiceField(
         label='ID Merk Obat',
-        choices=get_id_merk()
+        choices=g.get_id_merk()
     )
     netto_obat = forms.CharField(
         label='Netto',
         max_length=10,
-        required=True
     )
-    dosis_obat = forms.CharField(
+    dosis_obat = forms.CharField( 
         label='Dosis',
         max_length=100,
-        required=True
     )
     aturan_pakai = forms.CharField(
         label='Aturan Pakai',
@@ -47,40 +52,39 @@ class CreateObatForm(forms.Form):
     bentuk_kesediaan = forms.CharField(
         label='Bentuk Kesediaan',
         max_length=100,
-        required=True
     )
 
 class UpdateObatForm(forms.Form):
-    id_obat = forms.CharField(label='ID Obat', disabled=True)
+    g = Get()
+
+    id_obat = forms.CharField(
+        label='ID Obat',
+        disabled=True,
+    )
     id_produk = forms.CharField(label='ID Produk', disabled=True)
     id_merk_obat = forms.ChoiceField(
         label='ID Merk Obat' ,
-        choices=(
-            (1, 1),
-            (2, 2)
-        )
+        choices=g.get_id_merk()
     )
     netto_obat = forms.CharField(
         label='Netto',
         max_length=10,
-        required=True
     )
     dosis_obat = forms.CharField(
         label='Dosis',
         max_length=100,
-        required=True
     )
     aturan_pakai = forms.CharField(
         label='Aturan Pakai',
         max_length=100,
+        required=False
     )
     kontraindikasi = forms.CharField(
         label='Kontraindikasi',
         max_length=100,
+        required=False
     )
     bentuk_kesediaan = forms.CharField(
         label='Bentuk Kesediaan',
         max_length=100,
-        required=True
     )
-

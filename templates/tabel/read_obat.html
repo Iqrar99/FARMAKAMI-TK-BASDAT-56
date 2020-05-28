@@ -86,15 +86,24 @@
         <td>{{ obat.bentuk_kesediaan }}</td>
         {% if role == 'admin-apotek' or role == 'cs' %}
         <td>
-          <a href="">
-            <button>Update</button>
+          <a href="/obat/update/{{ obat.id_obat }}">
+          {% comment %} <form method="POST">
+            {% csrf_token %} {% endcomment %}
+              <button>
+                {% comment %} onclick="updateRowObat('{{ obat.id_obat }}', '{{ obat.id_produk }}', 
+                '{{ obat.id_merk_obat }}', '{{ obat.netto }}', '{{ obat.dosis }}',
+                '{{ obat.aturan_pakai }}', '{{ obat.kontraindikasi }}', '{{ obat.bentuk_kesediaan }}',
+                '{{ csrf_token }}')"> {% endcomment %}
+                Update
+              </button>
+          {% comment %} </form> {% endcomment %}
           </a>
+
           <form method="POST">
             {% csrf_token %}
             <button
               type="submit"
-              onclick="deleteRowObat('{{ obat.id_obat }}', '{{ csrf_token }}')"
-            >
+              onclick="deleteRowObat('{{ obat.id_obat }}', '{{ csrf_token }}')">
               Delete
             </button>
           </form>

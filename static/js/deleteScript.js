@@ -1,5 +1,5 @@
 /**
- * function untuk menghapus baris pada data obat.
+ * function untuk menghapus baris pada data balai.
  * @param id_balai Primary Key
  * @param token CSRF token
  */
