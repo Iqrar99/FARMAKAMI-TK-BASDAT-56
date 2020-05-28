@@ -78,7 +78,7 @@
     </thead>
     <tbody>
       {% for data in data_apotek %}
-      <tr>
+      <tr id="{{ data.id_apotek }}">
         <td>{{ data.id_apotek }}</td>
         <td>{{ data.nama_apotek }}</td>
         <td>{{ data.alamat_apotek }}</td>
@@ -91,9 +91,13 @@
           <a href="">
             <button>Update</button>
           </a>
-          <a href="">
-            <button>Delete</button>
-          </a>
+          <form method="POST">
+            {% csrf_token %}
+            <button type="submit"
+            onclick="deleteRowApotek('{{ data.id_apotek }}', '{{ csrf_token }}')">
+                Delete
+            </button>
+        </form>
         </td>
         {% else %}
         <td>-</td>
