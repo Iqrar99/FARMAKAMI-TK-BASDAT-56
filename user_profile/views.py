@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.db import connection
 
 def user_profile(request):
-    if 'email' not in request.session:
-        return redirect('/login/')
+    # if 'email' not in request.session:
+    #     return redirect('/login/')
 
     email = request.session['email']
     role = request.session['role']
