@@ -32,6 +32,7 @@ def user_login(request):
                 request.session['role'] = role
                 request.session['email'] = response['email']
                 request.session['nama'] = get_name(response['email'])
+                request.session.modified = True
 
                 return redirect('/user-profile')
 
