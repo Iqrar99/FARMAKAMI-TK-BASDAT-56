@@ -88,9 +88,10 @@
         <td>{{ data.email }}</td>
         {% if role == 'admin-apotek' %}
         <td>
-          <a href="">
+          <a href="/apotek/update/{{ data.id_apotek }}">
             <button>Update</button>
           </a>
+
           <form method="POST">
             {% csrf_token %}
             <button type="submit"
