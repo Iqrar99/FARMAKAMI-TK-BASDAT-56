@@ -165,8 +165,7 @@ def __create_produk_dibeli(jumlah, id_apotek, id_produk, id_transaksi):
 
 def __get_id_transaksi_pembelian():
     """
-    function untuk mendapatkan id apotek yang berasosiasi dengan
-    balai yang bersangkutan.
+    function untuk mendapatkan id transaksi pembelian yang telah terdaftar
     """
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO farmakami;")
@@ -180,7 +179,7 @@ def __get_id_transaksi_pembelian():
 
 def __update(id_produk,id_apotek,id_transaksi_pembelian, jumlah):
     """
-    function untuk memperbarui data balai pengobatan.
+    function untuk memperbarui data list product dibeli.
     """
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO farmakami;")
