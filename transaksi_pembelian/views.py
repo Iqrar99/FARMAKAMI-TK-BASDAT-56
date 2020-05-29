@@ -3,6 +3,7 @@ from django.db import connection
 from datetime import datetime
 from .forms import TransaksiPembelianForm, UpdateTransaksiPembelian
 
+
 def tabel_transaksi_pembelian(request):
     """
     function untuk menampilkan data transaksi pembelian.
@@ -11,11 +12,11 @@ def tabel_transaksi_pembelian(request):
         return redirect('/login/')
 
     nama = ""
-    
+
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO farmakami;")
 
-    if request.session['role'] == 'konsumen': 
+    if request.session['role'] == 'konsumen':
         query = f"""
             SELECT * FROM transaksi_pembelian
             WHERE id_konsumen = '{get_id_konsumen(request)}';
@@ -23,20 +24,21 @@ def tabel_transaksi_pembelian(request):
         cursor.execute(query)
 
         nama = request.session['nama']
-    
+
     else:
         query = """SELECT * FROM transaksi_pembelian;"""
         cursor.execute(query)
 
     data_transaksi_pembelian = __fetch(cursor)
-    
+
     context = {
-        'data_transaksi_pembelian' : data_transaksi_pembelian,
-        'role' : request.session['role'],
-        'nama' : nama
+        'data_transaksi_pembelian': data_transaksi_pembelian,
+        'role': request.session['role'],
+        'nama': nama
     }
 
     return render(request, 'tabel/read_transaksi_pembelian.html', context)
+
 
 def buat_transaksi_pembelian(request):
     """
@@ -61,7 +63,7 @@ def buat_transaksi_pembelian(request):
         try:
             __create_transaksi_beli(id_konsumen)
             print("TRANSAKSI PEMBELIAN SUKSES DITAMBAHKAN")
-            
+
             return redirect('/transaksi-pembelian/tabel/')
 
         except:
@@ -69,11 +71,54 @@ def buat_transaksi_pembelian(request):
 
     return render(request, 'create/create_transaksi_pembelian.html', context)
 
-def update_transaksi_pembelian(request):
+
+def update_transaksi_pembelian(request, id):
+    if 'email' not in request.session:
+        return redirect('/login/')
+
+    if (request.session['role'] != 'admin-apotek'):
+        return redirect(f'/navigate/{request.session["role"]}/')
+
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(
+        f"SELECT * FROM transaksi_pembelian WHERE id_transaksi_pembelian = '{id}';")
+
+    data_tp = __fetch(cursor)[0]
+
+    data_id_tp = id
+    data_waktu = data_tp['waktu_pembelian']
+    data_total = data_tp['total_pembayaran']
+    data_id_konsumen = data_tp['id_konsumen']
+
+    form = UpdateTransaksiPembelian(request.POST or None, initial={
+        'id_transaksi': data_id_tp,
+        'waktu_pembelian': data_waktu,
+        'total_pembayaran': data_total,
+        'id_konsumen': data_id_konsumen
+    })
+
     context = {
-        'form': UpdateTransaksiPembelian(request.POST or None)
+        'error': [],
+        'form': form
     }
+
+    if (request.method == 'POST' and form.is_valid()):
+        id_transaksi = data_id_tp
+        waktu_pembelian = data_waktu
+        total_pembayaran = data_total
+        id_konsumen = request.POST['id_konsumen']
+
+        try:
+            __update(id_transaksi)
+            print("Update sukses")
+
+            return redirect('/transaksi-pembelian/tabel/')
+        except:
+            print('Update Gagal')
+
     return render(request, 'update/update_transaksi_pembelian.html', context)
+
 
 def delete_transaksi_pembelian(request):
     """
@@ -91,6 +136,7 @@ def delete_transaksi_pembelian(request):
     )
 
     return redirect('/transaksi-pembelian/tabel/')
+
 
 def get_id_konsumen(request):
     """
@@ -111,13 +157,14 @@ def get_id_konsumen(request):
     id_konsumen = __fetch(cursor)[0]
     return id_konsumen['id_konsumen']
 
+
 def __create_transaksi_beli(id_konsumen):
     """
     function untuk menambah transaksi pembelian baru.
     """
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO farmakami;")
-     
+
     # generate id transaksi
     cursor.execute(
         """
@@ -143,6 +190,20 @@ def __create_transaksi_beli(id_konsumen):
         VALUES ('{new_id}', '{waktu_pembelian}', 0, '{id_konsumen}');
         """
     )
+
+
+def __update(id_transaksi):
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+
+    cursor.execute(
+        f"""
+        UPDATE transaksi_pembelian
+        SET waktu_pembelian = now()
+        WHERE id_transaksi_pembelian = '{id_transaksi}';
+        """
+    )
+
 
 def __fetch(cursor):
     columns = [col[0] for col in cursor.description]
