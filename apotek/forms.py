@@ -1,17 +1,6 @@
 from django import forms
 
 class CreateApotekForm(forms.Form):
-    email_penyelenggara = forms.EmailField(
-        label='Email Penyelenggara'
-    )
-    no_sia = forms.CharField(
-        label='No SIA Penyelenggara',
-        max_length=20,
-    )
-    nama_penyelenggara = forms.CharField(
-        label='Nama Penyelenggara',
-        max_length=50,
-    )
     nama_apotek = forms.CharField(
         label='Nama Apotek',
         max_length=50,
@@ -19,11 +8,23 @@ class CreateApotekForm(forms.Form):
     alamat_apotek = forms.CharField(
         label='Alamat Apotek',
         max_length=200,
-    )  
+    ) 
     telepon_apotek = forms.CharField(
         label='No telp. Apotek',
         max_length=20
     )
+    nama_penyelenggara = forms.CharField(
+        label='Nama Penyelenggara',
+        max_length=50,
+    )
+    no_sia = forms.CharField(
+        label='No SIA Penyelenggara',
+        max_length=20,
+    )
+    email_penyelenggara = forms.EmailField(
+        label='Email Penyelenggara'
+    )
+
 
 class UpdateApotekForm(forms.Form):
     id_apotek = forms.CharField(

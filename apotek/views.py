@@ -185,7 +185,7 @@ def delete_apotek(request):
         """
     )
 
-    time.sleep(7)
+    time.sleep(10)
     return redirect('apotek/tabel/')
 
 

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.db import connection, IntegrityError
 from .forms import CreateProdukApotekForm, UpdateProdukApotekForm
+import time
 
 # Create your views here.
 def tabel_produk_apotek(request):
@@ -101,6 +102,7 @@ def update_produk_apotek(request, idproduk, idapotek):
 			data_produk_apotek = x[i]
 			break
 
+	
 	data_harga_jual = data_produk_apotek['harga_jual']
 	data_satuan_penjualan = data_produk_apotek['satuan_penjualan']
 	data_stok = data_produk_apotek['stok']
@@ -122,8 +124,8 @@ def update_produk_apotek(request, idproduk, idapotek):
 	if (request.method == 'POST' and form.is_valid()):
 		valid = True
 
-		id_produk = idproduk
-		id_apotek = idapotek
+		id_produk = request.POST['id_produk']
+		id_apotek = request.POST['id_apotek']
 		harga_jual = request.POST['harga_jual']
 		satuan_penjualan = request.POST['satuan_penjualan']
 		stok = request.POST['stok']
@@ -176,6 +178,7 @@ def delete_produk_apotek(request):
 		"""
     )
 
+	time.sleep(10)
 	return redirect('/produk-apotek/tabel/')
 
 
