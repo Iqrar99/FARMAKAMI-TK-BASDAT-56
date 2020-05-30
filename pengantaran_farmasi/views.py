@@ -61,11 +61,75 @@ def create_pengantaran_farmasi(request):
 
     return render(request, 'create/create_pengantaran_farmasi.html', context)
 
-def update_pengantaran_farmasi(request):
-	context = {
-        'form' : UpdatePengantaranForm(request.POST or None)
+def update_pengantaran_farmasi(request,idpengantaran,totalbiaya):
+    if 'email' not in request.session:
+        return redirect('/login/')
+    
+    if (request.session['role'] != 'admin-apotek'):
+        return redirect(f'/navigate/{request.session["role"]}/')
+
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(f"SELECT * FROM pengantaran_farmasi")
+    
+    data_pengantaran = {}
+    x = __fetch(cursor)
+
+    for i in range(len(x)):
+        if x[i]['id_pengantaran'] == idpengantaran:
+            data_pengantaran = x[i]
+            break
+
+
+    data_id_kurir = __get_id_kurir()
+    data_id_transaksi_pembelian = __get_id_transaksi()
+    data_waktu = data_pengantaran['waktu'].strftime("%Y-%m-%d %H:%M:%S")
+    data_status = data_pengantaran['status_pengantaran']
+    data_biaya_kirim = data_pengantaran['biaya_kirim']
+
+    form = UpdatePengantaranForm(request.POST or None, initial = {
+        'id_pengantaran' : idpengantaran,
+        'id_kurir': data_id_kurir,
+        'id_transaksi' : data_id_transaksi_pembelian,
+        'waktu' : data_waktu,
+        'status_pengiriman' : data_status,
+        'biaya_kirim': data_biaya_kirim,
+        'total_biaya': totalbiaya,
+    })
+
+    context={
+        'error': [],
+        'form': form,
     }
-	return render(request, 'update/update_pengantaran_farmasi.html', context)
+    if (request.method == 'POST' and form.is_valid()):
+        valid = True
+
+        id_pengantaran = idpengantaran
+        id_kurir= request.POST['id_kurir']
+        id_transaksi_pembelian=request.POST['id_transaksi']
+        waktu=request.POST['waktu']
+        status_pengiriman=request.POST['status_pengiriman']
+        biaya_kirim=request.POST['biaya_kirim']
+        total_biaya=totalbiaya
+
+
+        if (biaya_kirim != '' and (not biaya_kirim.isnumeric())):
+            context['error'].append(
+                'Masukkan angka yang benar')
+            valid = valid and False
+        
+        if valid:
+            __update(id_pengantaran, id_kurir, id_transaksi_pembelian, waktu, status_pengiriman, biaya_kirim, total_biaya)
+            try:
+
+                print("UPDATE SUKSES")
+                return redirect('/pengantaran-farmasi/tabel/')
+
+            except:
+                print("UPDATE GAGAL")
+
+    return render(request, 'update/update_pengantaran_farmasi.html', context)
+
 
 def delete_pengantaran(request):
     """
@@ -116,6 +180,50 @@ def __create_pengantaran(id_transaksi, waktu, biaya):
         INSERT INTO pengantaran_farmasi
         VALUES ('{new_id}', '{id_kurir_default}', '{id_transaksi}', '{waktu}',
         'MENUNGGU', {biaya}, {biaya});
+        """
+    )
+
+def __get_id_transaksi():
+    """
+    function untuk mendapatkan id transaksi yang telah terdaftar
+    """
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(
+        f"""
+        SELECT id_transaksi_pembelian FROM transaksi_pembelian
+        """
+    )
+
+    return __fetch(cursor)[0]['id_transaksi_pembelian']
+
+def __get_id_kurir():
+    """
+    function untuk mendapatkan id kurir yang telah terdaftar
+    """
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(
+        f"""
+        SELECT id_kurir FROM kurir
+        """
+    )
+
+    return __fetch(cursor)[0]['id_kurir']
+
+
+
+def __update(id_pengantaran, id_kurir, id_transaksi_pembelian, waktu, status_pengantaran, biaya_kirim, total_biaya):
+    """
+    function untuk memperbarui data pengantaran farmasi.
+    """
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(
+        f"""
+        UPDATE pengantaran_farmasi
+        SET (id_kurir, id_transaksi_pembelian, waktu, status_pengantaran, biaya_kirim) = ('{id_kurir}','{id_transaksi_pembelian}','{waktu}','{status_pengantaran}','{biaya_kirim}')
+        WHERE total_biaya = '{total_biaya}' and id_pengantaran='{id_pengantaran}';
         """
     )
 

@@ -47,7 +47,7 @@
                     <td>{{ data.jumlah }}</td>
                     {% if role == 'admin-apotek' %}
                         <td>
-                            <a href="">
+                            <a href="/list-produk-dibeli/update/{{ data.id_produk }}/{{ data.id_apotek }}">
                                 <button>Update</button>
                             </a>
                             <form method="POST">

@@ -118,7 +118,7 @@
         <td>{{ data.total_biaya }}</td>
         {% if role == 'admin-apotek' %}
         <td>
-          <a href="">
+          <a href="/pengantaran-farmasi/update/{{ data.id_pengantaran }}/{{ data.total_biaya }}">
             <button>Update</button>
           </a>
           <form method="POST">

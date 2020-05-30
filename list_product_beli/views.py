@@ -54,6 +54,7 @@ def create_list_produk_dibeli(request):
             context['error'].append('Jumlah can not be negative.')
 
         if valid:
+
             try:
                 __create_produk_dibeli(jumlah, id_apotek, id_produk, id_transaksi)
                 print("SUKSES MENGINPUT PRODUK DIBELI")
@@ -65,11 +66,65 @@ def create_list_produk_dibeli(request):
 
     return render(request, 'create/create_list_produk_dibeli.html', context)
 
-def update_list_produk_dibeli(request):
-	context = {
-        'form' : UpdateList(request.POST or None)
+def update_list_produk_dibeli(request, idproduk, idapotek):
+    if 'email' not in request.session:
+        return redirect('/login/')
+    
+    if (request.session['role'] != 'admin-apotek'):
+        return redirect(f'/navigate/{request.session["role"]}/')
+
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(f"SELECT * FROM list_produk_dibeli")
+
+    data_list = {}
+    x = __fetch(cursor)
+    for i in range(len(x)):
+        if x[i]['id_produk'] == idproduk and x[i]['id_apotek']==idapotek:
+            data_list = x[i]
+            break
+
+
+    data_id_transaksi_pembelian = __get_id_transaksi_pembelian()
+    data_jumlah = data_list['jumlah']
+
+    form = UpdateList(request.POST or None, initial = {
+        'id_produk' : idproduk,
+        'id_apotek': idapotek,
+        'id_transaksi_pembelian' : data_id_transaksi_pembelian,
+        'jumlah' : data_jumlah,
+    })
+
+    context = {
+        'error': [],
+        'form': form,
     }
-	return render(request, 'update/update_list_product_dibeli.html', context)
+
+    if (request.method == 'POST' and form.is_valid()):
+        valid = True
+
+        id_produk = idproduk
+        id_apotek = idapotek
+        id_transaksi_pembelian = request.POST['id_transaksi_pembelian']
+        jumlah = request.POST['jumlah']
+
+        if (jumlah != '' and (not jumlah.isnumeric())):
+            context['error'].append(
+                'Masukkan angka jumlah yang benar')
+            valid = valid and False
+
+        if valid:
+            try:
+                __update(id_produk,id_apotek,id_transaksi_pembelian, jumlah)
+                print("UPDATE SUKSES")
+
+                return redirect('/list-produk-dibeli/tabel/')
+
+            except:
+                print("UPDATE GAGAL")
+
+    return render(request, 'update/update_list_product_dibeli.html', context)
+
 
 def delete_produk_dibeli(request):
     """
@@ -108,6 +163,35 @@ def __create_produk_dibeli(jumlah, id_apotek, id_produk, id_transaksi):
         VALUES ({jumlah}, '{id_apotek}', '{id_produk}', '{id_transaksi}');
         """
     )
+
+def __get_id_transaksi_pembelian():
+    """
+    function untuk mendapatkan id transaksi pembelian yang telah terdaftar
+    """
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(
+        f"""
+        SELECT id_transaksi_pembelian FROM transaksi_pembelian
+        """
+    )
+
+    return __fetch(cursor)[0]['id_transaksi_pembelian']
+
+def __update(id_produk,id_apotek,id_transaksi_pembelian, jumlah):
+    """
+    function untuk memperbarui data list product dibeli.
+    """
+    cursor = connection.cursor()
+    cursor.execute("SET SEARCH_PATH TO farmakami;")
+    cursor.execute(
+        f"""
+        UPDATE list_produk_dibeli
+        SET (id_transaksi_pembelian, jumlah) = ('{id_transaksi_pembelian}','{jumlah}')
+        WHERE id_produk = '{id_produk}' and id_apotek = '{id_apotek}';
+        """
+    )
+
 
 def __fetch(cursor):
     columns = [col[0] for col in cursor.description]
