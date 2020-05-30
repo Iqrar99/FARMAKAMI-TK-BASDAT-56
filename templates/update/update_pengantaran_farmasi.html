@@ -8,6 +8,15 @@
         {{ form.as_p }}
         <button class="btn btn-primary" name='submit' type='submit'>Submit</button>
     </form>
+ 
+  <button class="btn btn-primary" name="submit" type="submit">Submit</button>
+
+  <a href="/pengantaran-farmasi/tabel/">
+    <button style="margin-top: 20px;" class="btn btn-info" type="submit">
+      Batal
+    </button>
+  </a>
+</div>
 
     {% for e in error %}
     <p style="color: red;">{{ e }}</p>
