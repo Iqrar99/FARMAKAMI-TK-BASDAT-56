@@ -1,8 +1,14 @@
 from django import forms
 from django.db import connection
 
-class CreateProdukApotekForm(forms.Form):
-    def get_id_produk():
+class Get(object):
+    def __init__(self):
+        super().__init__()
+
+    def get_id_produk(self):
+        """
+        function untuk mendapatkan id produk pada tabel produk.
+        """
         cursor = connection.cursor()
         cursor.execute("SET SEARCH_PATH TO farmakami;")
         cursor.execute("SELECT id_produk FROM produk;")
@@ -17,7 +23,10 @@ class CreateProdukApotekForm(forms.Form):
 
         return tuple(packed_data)
 
-    def get_id_apotek():
+    def get_id_apotek(self):
+        """
+        function untuk mendapatkan id apotek pada tabel apotek.
+        """
         cursor = connection.cursor()
         cursor.execute("SET SEARCH_PATH TO farmakami;")
         cursor.execute("SELECT id_apotek FROM apotek;")
@@ -32,13 +41,17 @@ class CreateProdukApotekForm(forms.Form):
 
         return tuple(packed_data)
 
+
+class CreateProdukApotekForm(forms.Form):
+    g = Get()
+
     id_produk = forms.ChoiceField(
         label='ID Produk',
-        choices=get_id_produk()
+        choices=g.get_id_produk()
     )
     id_apotek = forms.ChoiceField(
         label='ID Apotek',
-        choices=get_id_apotek()
+        choices=g.get_id_apotek()
     )
     harga_jual = forms.IntegerField(label='Harga Jual')
     satuan_penjualan = forms.CharField(
@@ -48,28 +61,23 @@ class CreateProdukApotekForm(forms.Form):
     )  
     stok = forms.IntegerField(label='Stok')
 
+
 class UpdateProdukApotekForm(forms.Form):
-    id_produk = forms.CharField(
+    g = Get()
+
+    id_produk = forms.ChoiceField(
         label='ID Produk',
-        widget=forms.Select(choices=((1,1)))
+        choices=g.get_id_produk()
     )
-    id_apotek = forms.CharField(
+    id_apotek = forms.ChoiceField(
         label='ID Apotek',
-        widget=forms.Select(choices=((1,1)))
+        choices=g.get_id_apotek()
     )
-    harga_jual = forms.CharField(
-        label='Harga Jual',
-        max_length=15,
-        required=True
-    )
+    harga_jual = forms.IntegerField(label='Harga Jual')
     satuan_penjualan = forms.CharField(
         label='Satuan Penjualan',
         max_length=5,
         required=True
     )  
-    stok = forms.CharField(
-        label='Stok',
-        max_length=10,
-        required=True
-    )
+    stok = forms.IntegerField(label='Stok')
     
