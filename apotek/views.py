@@ -67,7 +67,8 @@ def buat_apotek(request):
 
             try:
                 __create_apotek(email, no_sia, nama_penyelenggara,
-                                nama_apotek, alamat, telp)
+                                nama_apotek, alamat, telp,
+                                email_admin=request.session['email'])
                 print("APOTEK SUKSES DIBUAT")
                 return redirect('/apotek/tabel/')
 
@@ -189,7 +190,7 @@ def delete_apotek(request):
     return redirect('apotek/tabel/')
 
 
-def __create_apotek(email, no_sia, nama_penyelenggara, nama_apotek, alamat, telp):
+def __create_apotek(email, no_sia, nama_penyelenggara, nama_apotek, alamat, telp, **kwargs):
     """
     function untuk menambahkan apotek ke database.
     """
@@ -216,7 +217,17 @@ def __create_apotek(email, no_sia, nama_penyelenggara, nama_apotek, alamat, telp
 		INSERT INTO apotek
 		VALUES ('{new_id}', '{email}', '{no_sia}', '{nama_penyelenggara}', 
 		'{nama_apotek}', '{alamat}', '{telp}');
-		"""
+        """
+    )
+
+    # langsung assign admin-apotek ke apoteknya
+    email_admin = kwargs['email_admin']
+    cursor.execute(
+        f"""
+		UPDATE admin_apotek
+        SET id_apotek = '{new_id}'
+        WHERE email = '{email_admin}'; 
+        """
     )
 
 
