@@ -124,7 +124,9 @@ def update_produk_apotek(request, idproduk, idapotek):
 	if (request.method == 'POST' and form.is_valid()):
 		valid = True
 
+		id_produk_old = idproduk
 		id_produk = request.POST['id_produk']
+		id_apotek_old = idapotek
 		id_apotek = request.POST['id_apotek']
 		harga_jual = request.POST['harga_jual']
 		satuan_penjualan = request.POST['satuan_penjualan']
@@ -142,7 +144,8 @@ def update_produk_apotek(request, idproduk, idapotek):
 
 		if valid:
 			try:
-				__update(id_produk, id_apotek, harga_jual, satuan_penjualan, stok)
+				__update(id_produk, id_apotek, harga_jual, satuan_penjualan, stok,
+						id_produk_old=id_produk_old, id_apotek_old=id_apotek_old)
 				print("UPDATE PRODUK APOTEK SUKSES")
 				return redirect('/produk-apotek/tabel/')
 
@@ -197,22 +200,25 @@ def __create_produk_apotek(harga, stok, satuan, id_produk, id_apotek):
 	)
 
 
-def __update(id_produk, id_apotek, harga_jual, satuan_penjualan, stok):
+def __update(id_produk, id_apotek, harga_jual, satuan_penjualan, stok, **kwargs):
 	"""
 	function untuk memperbarui data produk apotek.
 	"""
+	id_produk_old = kwargs['id_produk_old']
+	id_apotek_old = kwargs['id_apotek_old']
+
 	cursor = connection.cursor()
 	cursor.execute("SET SEARCH_PATH TO farmakami;")
 	cursor.execute(
 		f"""
 		UPDATE list_produk_dibeli
 		SET (id_produk, id_apotek) = ('{id_produk}', '{id_apotek}')
-		WHERE id_produk = '{id_produk}' and id_apotek = '{id_apotek}';
+		WHERE id_produk = '{id_produk_old}' and id_apotek = '{id_apotek_old}';
 	
 		UPDATE produk_apotek
 		SET (id_produk, id_apotek, harga_jual, satuan_penjualan, stok) = 
 		('{id_produk}', '{id_apotek}', '{harga_jual}', '{satuan_penjualan}', '{stok}')
-		WHERE id_produk = '{id_produk}' and id_apotek = '{id_apotek}';
+		WHERE id_produk = '{id_produk_old}' and id_apotek = '{id_apotek_old}';
 		"""
 	)
 
