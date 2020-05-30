@@ -3,6 +3,9 @@ from django.db import connection
 from .forms import CreateBalaiPengobatanForm, UpdateBalaiPengobatanForm
 
 def tabel_balai_pengobatan(request):
+    """
+    function untuk menampilkan tabel balai pengobatan.
+    """
     if 'email' not in request.session:
         return redirect('/login/')
 
@@ -23,6 +26,9 @@ def tabel_balai_pengobatan(request):
 
 
 def buat_balai_pengobatan(request):
+    """
+    function untuk membuat data balai pengobatan.
+    """
     if 'email' not in request.session:
         return redirect('/login/')
 
@@ -68,6 +74,9 @@ def buat_balai_pengobatan(request):
     return render(request, 'create/create_balai_pengobatan.html', context)
 
 def update_balai_pengobatan(request, id):
+    """
+    function untuk memperbarui data balai pengobatan.
+    """
     if 'email' not in request.session:
         return redirect('/login/')
 
