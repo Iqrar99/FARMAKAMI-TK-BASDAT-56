@@ -66,29 +66,31 @@
 
     <tbody>
       {% for data in data_transaksi_pembelian %}
-        <tr id="{{ data.id_transaksi_pembelian }}">
-          <td>{{ data.id_transaksi_pembelian }}</td>
-          <td>{{ data.waktu_pembelian }}</td>
-          <td>{{ data.total_pembayaran }}</td>
-          <td>{{ data.id_konsumen }}</td>
-          {% if role == 'admin-apotek' %}
-            <td>
-                <a href="">
-                    <button>Update</button>
-                </a>
-                <form method="POST">
-                  {% csrf_token %}
-                  <button type="submit"
-                  onclick="deleteRowTransaksi('{{ data.id_transaksi_pembelian }}', '{{ csrf_token }}')">
-                      Delete
-                  </button>
-                </form>
-            </td>
-          {% else %}
-              <td>-</td>
-          {% endif %}
-        </tr>
-      
+      <tr id="{{ data.id_transaksi_pembelian }}">
+        <td>{{ data.id_transaksi_pembelian }}</td>
+        <td>{{ data.waktu_pembelian }}</td>
+        <td>{{ data.total_pembayaran }}</td>
+        <td>{{ data.id_konsumen }}</td>
+        {% if role == 'admin-apotek' %}
+        <td>
+          <a href="/transaksi-pembelian/update/{{data.id_transaksi_pembelian}}">
+            <button>Update</button>
+          </a>
+          <form method="POST">
+            {% csrf_token %}
+            <button
+              type="submit"
+              onclick="deleteRowTransaksi('{{ data.id_transaksi_pembelian }}', '{{ csrf_token }}')"
+            >
+              Delete
+            </button>
+          </form>
+        </td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
+      </tr>
+
       {% endfor %}
     </tbody>
   </table>

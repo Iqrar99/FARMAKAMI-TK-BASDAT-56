@@ -1,13 +1,17 @@
 from django.shortcuts import render, redirect
 from django.db import connection, IntegrityError
 from .forms import CreateProdukApotekForm, UpdateProdukApotekForm
+import time
 
 # Create your views here.
 def tabel_produk_apotek(request):
+	"""
+    function untuk menampilkan data produk apotek.
+    """
 	if 'email' not in request.session:
 		return redirect('/login/')
 
-	query = """SELECT * FROM produk_apotek;"""
+	query = """SELECT * FROM produk_apotek ORDER BY id_produk ASC;"""
 
 	cursor = connection.cursor()
 	cursor.execute("SET SEARCH_PATH TO farmakami;")
@@ -22,9 +26,10 @@ def tabel_produk_apotek(request):
 
 	return render(request, 'tabel/read_produk_apotek.html', context)
 
+
 def buat_produk_apotek(request):
 	"""
-	function untuk menambahkan data produk apotek.
+	function untuk membuat data produk apotek.
 	"""
 
 	if 'email' not in request.session:
@@ -75,11 +80,82 @@ def buat_produk_apotek(request):
 
 	return render(request, 'create/create_produk_apotek.html', context)
 
-def update_produk_apotek(request):
+
+def update_produk_apotek(request, idproduk, idapotek):
+	
+	if 'email' not in request.session:
+		return redirect('/login/')
+
+	if(request.session['role'] != 'admin-apotek'):
+		return redirect(f'/navigate/{request.session["role"]}/')
+
+    # Panggil data initial pada form
+
+	cursor = connection.cursor()
+	cursor.execute("SET SEARCH_PATH TO farmakami;")
+	cursor.execute(f"SELECT * FROM produk_apotek")
+
+	data_produk_apotek = {}
+	x = __fetch(cursor)
+	for i in range(len(x)):
+		if x[i]['id_produk'] == idproduk and x[i]['id_apotek'] == idapotek:
+			data_produk_apotek = x[i]
+			break
+
+	
+	data_harga_jual = data_produk_apotek['harga_jual']
+	data_satuan_penjualan = data_produk_apotek['satuan_penjualan']
+	data_stok = data_produk_apotek['stok']
+
+	form = UpdateProdukApotekForm(request.POST or None, initial = {
+		'id_produk' : idproduk,
+		'id_apotek' : idapotek,
+		'harga_jual': data_harga_jual,
+		'satuan_penjualan' : data_satuan_penjualan,
+		'stok' : data_stok
+	})
+
 	context = {
-        'form' : UpdateProdukApotekForm(request.POST or None)
+		'error': [],
+		'form': form,
     }
+
+
+	if (request.method == 'POST' and form.is_valid()):
+		valid = True
+
+		id_produk = request.POST['id_produk']
+		id_apotek = request.POST['id_apotek']
+		harga_jual = request.POST['harga_jual']
+		satuan_penjualan = request.POST['satuan_penjualan']
+		stok = request.POST['stok']
+        
+       	# validasi harga
+		if int(harga_jual) < 0:
+			valid = valid and False
+			context['error'].append('Harga Jual can not be negative.')
+
+		# validasi stok
+		if int(stok) < 0:
+			valid = valid and False
+			context['error'].append('Stok can not be negative.')
+
+		if valid:
+			try:
+				__update(id_produk, id_apotek, harga_jual, satuan_penjualan, stok)
+				print("UPDATE PRODUK APOTEK SUKSES")
+				return redirect('/produk-apotek/tabel/')
+
+			except IntegrityError as integrity:
+				context['error'].append(integrity)
+				print("UPDATE PRODUK APOTEK GAGAL")
+
+			except:
+				print("UPDATE PRODUK APOTEK GAGAL")
+
+
 	return render(request, 'update/update_produk_apotek.html', context)
+
 
 def delete_produk_apotek(request):
 	"""
@@ -102,7 +178,9 @@ def delete_produk_apotek(request):
 		"""
     )
 
+	time.sleep(10)
 	return redirect('/produk-apotek/tabel/')
+
 
 def __create_produk_apotek(harga, stok, satuan, id_produk, id_apotek):
 	"""
@@ -117,6 +195,27 @@ def __create_produk_apotek(harga, stok, satuan, id_produk, id_apotek):
 		VALUES ({harga}, {stok}, '{satuan}', '{id_produk}', '{id_apotek}');
 		"""
 	)
+
+
+def __update(id_produk, id_apotek, harga_jual, satuan_penjualan, stok):
+	"""
+	function untuk memperbarui data produk apotek.
+	"""
+	cursor = connection.cursor()
+	cursor.execute("SET SEARCH_PATH TO farmakami;")
+	cursor.execute(
+		f"""
+		UPDATE list_produk_dibeli
+		SET (id_produk, id_apotek) = ('{id_produk}', '{id_apotek}')
+		WHERE id_produk = '{id_produk}' and id_apotek = '{id_apotek}';
+	
+		UPDATE produk_apotek
+		SET (id_produk, id_apotek, harga_jual, satuan_penjualan, stok) = 
+		('{id_produk}', '{id_apotek}', '{harga_jual}', '{satuan_penjualan}', '{stok}')
+		WHERE id_produk = '{id_produk}' and id_apotek = '{id_apotek}';
+		"""
+	)
+
 
 def __fetch(cursor):
 	columns = [col[0] for col in cursor.description]
