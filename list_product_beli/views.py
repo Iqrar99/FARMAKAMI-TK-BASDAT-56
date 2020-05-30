@@ -54,6 +54,7 @@ def create_list_produk_dibeli(request):
             context['error'].append('Jumlah can not be negative.')
 
         if valid:
+
             try:
                 __create_produk_dibeli(jumlah, id_apotek, id_produk, id_transaksi)
                 print("SUKSES MENGINPUT PRODUK DIBELI")
