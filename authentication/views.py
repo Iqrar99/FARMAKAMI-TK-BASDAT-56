@@ -33,6 +33,7 @@ def user_login(request):
                 request.session['email'] = response['email']
                 request.session['nama'] = get_name(response['email'])
                 request.session.modified = True
+                request.session.set_expiry(0)
 
                 return redirect('/user-profile')
 
