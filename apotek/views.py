@@ -169,7 +169,7 @@ def delete_apotek(request):
     cursor.execute(
         f"""
         DELETE FROM list_produk_dibeli
-        WHERE id_apotek = '{id_apotek} ';
+        WHERE id_apotek = '{id_apotek}';
 
         DELETE FROM produk_apotek
         WHERE id_apotek = '{id_apotek}';
