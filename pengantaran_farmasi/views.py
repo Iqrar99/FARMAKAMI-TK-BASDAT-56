@@ -8,7 +8,7 @@ def tabel_pengantaran_farmasi(request):
     if 'email' not in request.session:
         return redirect('/login/')
 
-    query = """SELECT * FROM pengantaran_farmasi;"""
+    query = """SELECT * FROM pengantaran_farmasi ORDER BY id_pengantaran;"""
 
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO farmakami;")
@@ -80,8 +80,7 @@ def update_pengantaran_farmasi(request,idpengantaran,totalbiaya):
             data_pengantaran = x[i]
             break
 
-
-    data_id_kurir = __get_id_kurir()
+    data_id_kurir = data_pengantaran['id_kurir']
     data_id_transaksi_pembelian = __get_id_transaksi()
     data_waktu = data_pengantaran['waktu'].strftime("%Y-%m-%d %H:%M:%S")
     data_status = data_pengantaran['status_pengantaran']
@@ -119,8 +118,9 @@ def update_pengantaran_farmasi(request,idpengantaran,totalbiaya):
             valid = valid and False
         
         if valid:
-            __update(id_pengantaran, id_kurir, id_transaksi_pembelian, waktu, status_pengiriman, biaya_kirim, total_biaya)
             try:
+                __update(id_pengantaran, id_kurir, id_transaksi_pembelian,
+                            waktu, status_pengiriman, biaya_kirim, total_biaya)
 
                 print("UPDATE SUKSES")
                 return redirect('/pengantaran-farmasi/tabel/')
@@ -173,7 +173,7 @@ def __create_pengantaran(id_transaksi, waktu, biaya):
     # choose random kurir as default kurir
     cursor.execute("SELECT id_kurir FROM kurir;")
     data = [row for row in cursor.fetchall()]
-    id_kurir_default = random.choice(data)[0]
+    id_kurir_default = 'KU01'
 
     cursor.execute(
         f"""
@@ -191,27 +191,11 @@ def __get_id_transaksi():
     cursor.execute("SET SEARCH_PATH TO farmakami;")
     cursor.execute(
         f"""
-        SELECT id_transaksi_pembelian FROM transaksi_pembelian
+        SELECT id_transaksi_pembelian FROM transaksi_pembelian;
         """
     )
 
     return __fetch(cursor)[0]['id_transaksi_pembelian']
-
-def __get_id_kurir():
-    """
-    function untuk mendapatkan id kurir yang telah terdaftar
-    """
-    cursor = connection.cursor()
-    cursor.execute("SET SEARCH_PATH TO farmakami;")
-    cursor.execute(
-        f"""
-        SELECT id_kurir FROM kurir
-        """
-    )
-
-    return __fetch(cursor)[0]['id_kurir']
-
-
 
 def __update(id_pengantaran, id_kurir, id_transaksi_pembelian, waktu, status_pengantaran, biaya_kirim, total_biaya):
     """
