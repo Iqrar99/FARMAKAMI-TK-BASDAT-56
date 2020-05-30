@@ -1,7 +1,6 @@
 from django import forms
 from django.db import connection
 
-
 class TransaksiPembelianForm(forms.Form):
     def get_id_konsumen():
         """
@@ -16,7 +15,6 @@ class TransaksiPembelianForm(forms.Form):
 
         packed_data = []
         for data in data_id:
-            number = int(data['id_konsumen'][-2:])
             packed_data.append((data['id_konsumen'], data['id_konsumen']))
 
         return tuple(packed_data)
@@ -25,7 +23,6 @@ class TransaksiPembelianForm(forms.Form):
         label='ID Konsumen',
         choices=get_id_konsumen()
     )
-
 
 class UpdateTransaksiPembelian(forms.Form):
     def get_id_konsumen():
@@ -41,7 +38,6 @@ class UpdateTransaksiPembelian(forms.Form):
 
         packed_data = []
         for data in data_id:
-            number = int(data['id_konsumen'][-2:])
             packed_data.append((data['id_konsumen'], data['id_konsumen']))
 
         return tuple(packed_data)

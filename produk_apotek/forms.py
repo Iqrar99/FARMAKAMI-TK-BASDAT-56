@@ -18,7 +18,6 @@ class Get(object):
 
         packed_data = []
         for data in data_id:
-            number = int(data['id_produk'][-3:])
             packed_data.append((data['id_produk'], data['id_produk']))
 
         return tuple(packed_data)
@@ -36,11 +35,9 @@ class Get(object):
 
         packed_data = []
         for data in data_id:
-            number = int(data['id_apotek'][-2:])
             packed_data.append((data['id_apotek'], data['id_apotek']))
 
         return tuple(packed_data)
-
 
 class CreateProdukApotekForm(forms.Form):
     g = Get()
@@ -60,7 +57,6 @@ class CreateProdukApotekForm(forms.Form):
         required=True
     )  
     stok = forms.IntegerField(label='Stok')
-
 
 class UpdateProdukApotekForm(forms.Form):
     g = Get()

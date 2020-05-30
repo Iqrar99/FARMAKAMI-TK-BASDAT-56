@@ -13,7 +13,6 @@ class PengantaranForm(forms.Form):
 
         packed_data = []
         for data in data_id:
-            number = int(data['id_transaksi_pembelian'][-3:])
             packed_data.append((data['id_transaksi_pembelian'], data['id_transaksi_pembelian']))
 
         return tuple(packed_data)
@@ -41,7 +40,6 @@ class UpdatePengantaranForm(forms.Form):
 
         packed_data = []
         for data in data_id:
-            number = int(data['id_transaksi_pembelian'][-3:])
             packed_data.append((data['id_transaksi_pembelian'], data['id_transaksi_pembelian']))
 
         return tuple(packed_data)
@@ -56,7 +54,6 @@ class UpdatePengantaranForm(forms.Form):
 
         packed_data = []
         for data in data_id:
-            number = int(data['id_kurir'][-2:])
             packed_data.append((data['id_kurir'], data['id_kurir']))
 
         return tuple(packed_data)

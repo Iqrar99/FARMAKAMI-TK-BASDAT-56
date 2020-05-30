@@ -19,7 +19,6 @@ class Get(object):
 
         packed_data = []
         for data in data_id:
-            number = int(data['id_merk_obat'][-2:])
             packed_data.append((data['id_merk_obat'], data['id_merk_obat']))
 
         return tuple(packed_data)
