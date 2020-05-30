@@ -3,7 +3,6 @@
 <div class="container" style="margin-top: 50px;">
   <h2>Update List Produk Dibeli</h2>
 
-<<<<<<< HEAD
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
@@ -14,20 +13,12 @@
     <p style="color: red;">{{ e }}</p>
     {% endfor %}
     
-    
-=======
-  {% csrf_token %} {{ form.as_p }}
-
-  <br /><br />
-
-  <button class="btn btn-primary" name="submit" type="submit">Submit</button>
 
   <a href="/list-produk-dibeli/tabel/">
     <button style="margin-top: 20px;" class="btn btn-info" type="submit">
       Batal
     </button>
   </a>
->>>>>>> master
 </div>
 
 {% endblock content %}
