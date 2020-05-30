@@ -211,10 +211,6 @@ def __update(id_produk, id_apotek, harga_jual, satuan_penjualan, stok, **kwargs)
 	cursor.execute("SET SEARCH_PATH TO farmakami;")
 	cursor.execute(
 		f"""
-		UPDATE list_produk_dibeli
-		SET (id_produk, id_apotek) = ('{id_produk}', '{id_apotek}')
-		WHERE id_produk = '{id_produk_old}' and id_apotek = '{id_apotek_old}';
-	
 		UPDATE produk_apotek
 		SET (id_produk, id_apotek, harga_jual, satuan_penjualan, stok) = 
 		('{id_produk}', '{id_apotek}', '{harga_jual}', '{satuan_penjualan}', '{stok}')
