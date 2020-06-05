@@ -215,6 +215,10 @@ def __update(id_produk, id_apotek, harga_jual, satuan_penjualan, stok, **kwargs)
 		SET (id_produk, id_apotek, harga_jual, satuan_penjualan, stok) = 
 		('{id_produk}', '{id_apotek}', '{harga_jual}', '{satuan_penjualan}', '{stok}')
 		WHERE id_produk = '{id_produk_old}' and id_apotek = '{id_apotek_old}';
+			
+		UPDATE list_produk_dibeli
+		SET (id_produk, id_apotek) = ('{id_produk}', '{id_apotek}')
+		WHERE id_produk = '{id_produk_old}' and id_apotek = '{id_apotek_old}';
 		"""
 	)
 
