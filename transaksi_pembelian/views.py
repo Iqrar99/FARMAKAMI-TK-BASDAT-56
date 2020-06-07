@@ -19,14 +19,19 @@ def tabel_transaksi_pembelian(request):
     if request.session['role'] == 'konsumen':
         query = f"""
             SELECT * FROM transaksi_pembelian
-            WHERE id_konsumen = '{get_id_konsumen(request)}';
+            WHERE id_konsumen = '{get_id_konsumen(request)}'
+            ORDER BY id_transaksi_pembelian;
         """
         cursor.execute(query)
 
         nama = request.session['nama']
 
     else:
-        query = """SELECT * FROM transaksi_pembelian;"""
+        query = """
+            SELECT * FROM transaksi_pembelian
+            ORDER BY id_transaksi_pembelian;
+        """
+
         cursor.execute(query)
 
     data_transaksi_pembelian = __fetch(cursor)

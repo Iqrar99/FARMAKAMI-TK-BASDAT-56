@@ -9,7 +9,7 @@ def tabel_list_produk_dibeli(request):
     if 'email' not in request.session:
         return redirect('/login/')
 
-    query = """SELECT * FROM list_produk_dibeli;"""
+    query = """SELECT * FROM list_produk_dibeli ORDER BY id_apotek;"""
 
     cursor = connection.cursor()
     cursor.execute("SET SEARCH_PATH TO farmakami;")
@@ -172,7 +172,7 @@ def __get_id_transaksi_pembelian():
     cursor.execute("SET SEARCH_PATH TO farmakami;")
     cursor.execute(
         f"""
-        SELECT id_transaksi_pembelian FROM transaksi_pembelian
+        SELECT id_transaksi_pembelian FROM transaksi_pembelian;
         """
     )
 
